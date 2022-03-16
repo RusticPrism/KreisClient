@@ -2,23 +2,17 @@ package de.rusticprism.kreisclient.mixin;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.sun.jna.platform.win32.WinBase;
 import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.accountmanager.Config;
 import de.rusticprism.kreisclient.accountmanager.gui.MSAuthScreen;
 import de.rusticprism.kreisclient.accountmanager.utils.Expression;
 import de.rusticprism.kreisclient.buttons.ButtonWidget;
 import de.rusticprism.kreisclient.discord.Discord;
-import net.fabricmc.loader.impl.lib.sat4j.pb.constraints.pb.IDataStructurePB;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.CubeMapRenderer;
-import net.minecraft.client.gui.RotatingCubeMapRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
-import net.minecraft.client.gui.screen.multiplayer.MultiplayerWarningScreen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
-import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
@@ -36,7 +30,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
-import java.io.File;
 import java.io.InputStream;
 
 @Mixin(TitleScreen.class)
@@ -48,15 +41,11 @@ public abstract class TitleScreenMixin extends Screen {
 	@Shadow protected abstract void initWidgetsNormal(int y, int spacingY);
 
 	@Mutable
-	@Shadow @Final private RotatingCubeMapRenderer backgroundRenderer;
-	@Mutable
 	@Shadow @Final private boolean doBackgroundFade;
 	@Mutable
 	@Shadow @Final private static Identifier PANORAMA_OVERLAY;
-	@Shadow @Final private static Identifier MINECRAFT_TITLE_TEXTURE;
 	private int kreisclientTextX;
 	private static int textX, textY;
-	private int kreisclientTextWidth;
 	private long backgroundFadeStart;
 
 	private TitleScreenMixin() {
@@ -86,8 +75,8 @@ public abstract class TitleScreenMixin extends Screen {
 			textY = height / 4 + 48 + 72 + 12 + (KreisClient.modMenu?32:22);
 		}
 		this.copyrightTextX = 100000;
-		this.kreisclientTextWidth = this.textRenderer.getWidth("§1KreisClient by §8RusticPrism");
-		this.kreisclientTextX = this.width - this.kreisclientTextWidth - 2;
+		int kreisclientTextWidth = this.textRenderer.getWidth("§1KreisClient by §8RusticPrism");
+		this.kreisclientTextX = this.width - kreisclientTextWidth - 2;
 		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, j + 72 + 12, 98, 20, new TranslatableText("menu.options"), (button) -> {
 			this.client.setScreen(new OptionsScreen(this, this.client.options));
 		}));

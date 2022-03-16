@@ -46,7 +46,7 @@ public class Config {
                 KreisClient.LOGGER.warn("Couldnt create " + filename + " !");
                 return null;
             }
-            return file;
         }
+        return file;
     }
 }
