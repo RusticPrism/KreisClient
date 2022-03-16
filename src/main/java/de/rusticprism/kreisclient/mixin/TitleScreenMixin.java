@@ -108,6 +108,7 @@ public abstract class TitleScreenMixin extends Screen {
 		float g = this.doBackgroundFade ? MathHelper.clamp(f - 1.0F, 0.0F, 1.0F) : 1.0F;
 		int l = MathHelper.ceil(g * 255.0F) << 24;
 		drawStringWithShadow(ms, this.textRenderer, "§1KreisClient §8" + MinecraftClient.getInstance().getGame().getVersion().getName(), 2, this.height - 10, 16777215 | l);
+		drawCenteredText(ms, textRenderer, "Your logged in as " + client.getSession().getUsername(), textX, textY, Color.blue.getRGB());
 
 		super.render(ms, mouseX, mouseY, delta);
 		ci.cancel();
@@ -115,7 +116,6 @@ public abstract class TitleScreenMixin extends Screen {
 
 	@Inject(method = "render", at = @At("TAIL"))
 	public void onBottomRender(MatrixStack ms, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-		drawCenteredText(ms, textRenderer, "Your logged in as " + client.getSession().getUsername(), textX, textY, 0xFFCC8888);
 		drawStringWithShadow(ms, this.textRenderer, "KreisClient by RusticPrism", this.kreisclientTextX, this.height - 10, Color.white.getRGB());
 	}
 
