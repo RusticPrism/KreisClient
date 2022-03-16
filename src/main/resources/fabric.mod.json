@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "kreisclient",
+  "version": "${version}",
+
+  "name": "KreisClient",
+  "description": "Client for Kreiscraft",
+  "authors": [
+    "RusticPrism"
+  ],
+  "contact": {
+    "homepage": "kreiscraft.de (coming soon)",
+    "sources": " "
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/kreisclient/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "de.rusticprism.kreisclient.KreisClient"
+    ]
+  },
+  "mixins": [
+    "kreisclient.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
