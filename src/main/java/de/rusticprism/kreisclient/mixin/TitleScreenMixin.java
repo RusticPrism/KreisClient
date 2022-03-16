@@ -86,7 +86,7 @@ public abstract class TitleScreenMixin extends Screen {
 			textY = height / 4 + 48 + 72 + 12 + (KreisClient.modMenu?32:22);
 		}
 		this.copyrightTextX = 100000;
-		this.kreisclientTextWidth = this.textRenderer.getWidth("KreisClient by RusticPrism");
+		this.kreisclientTextWidth = this.textRenderer.getWidth("§1KreisClient by §8RusticPrism");
 		this.kreisclientTextX = this.width - this.kreisclientTextWidth - 2;
 		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, j + 72 + 12, 98, 20, new TranslatableText("menu.options"), (button) -> {
 			this.client.setScreen(new OptionsScreen(this, this.client.options));
