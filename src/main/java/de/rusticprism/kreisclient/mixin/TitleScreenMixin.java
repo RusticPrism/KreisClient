@@ -84,13 +84,13 @@ public abstract class TitleScreenMixin extends Screen {
 		this.addDrawableChild(new ButtonWidget(this.width / 2 + 2, j + 72 + 12, 98, 20, new TranslatableText("menu.quit"), (button) -> {
 			this.client.scheduleStop();
 		}));
-		this.addDrawableChild(new ButtonWidget(this.width /2 -100, j + 48, 98,20 , new LiteralText("Settings"), (button) -> {
+		this.addDrawableChild(new ButtonWidget(this.width /2 -100, j + 48, 98,20 , new TranslatableText("kreisclient.settings"), (button) -> {
 			KreisClient.LOGGER.info("Settings");
 		}));
-		this.addDrawableChild(new ButtonWidget(this.width /2 + 2, j + 48, 98,20 , new LiteralText("Cosmetics"), (button) -> {
+		this.addDrawableChild(new ButtonWidget(this.width /2 + 2, j + 48, 98,20 , new TranslatableText("kreisclient.cosmetics"), (button) -> {
 			KreisClient.LOGGER.info("Cosmetics (soon)");
 		}));
-		this.addDrawableChild(new ButtonWidget(0,0,98,20,new LiteralText("AccountManager"), (button -> {
+		this.addDrawableChild(new ButtonWidget(0,0,98,20,new TranslatableText("kreisclient.accountmanager"), (button -> {
 			MinecraftClient.getInstance().setScreen(new MSAuthScreen(this,account -> {}));
 		})));
 	}
