@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
 import net.minecraft.client.gui.screen.option.OptionsScreen;
+import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
@@ -59,7 +60,7 @@ public abstract class TitleScreenMixin extends Screen {
 		Discord.update("Idle","MainMenu");
 			this.initWidgetsNormal(j, 24);
 		InputStream inputStream16 = de.rusticprism.kreisclient.config.Config.getResource("assets/kreisclient/icons/icon_16x16.png");
-		InputStream inputStream32 = de.rusticprism.kreisclient.config.Config.getResource("assets/kreisclient/icons/icon_16x16.png");
+		InputStream inputStream32 = de.rusticprism.kreisclient.config.Config.getResource("assets/kreisclient/icons/icon_32x32.png");
 		MinecraftClient.getInstance().getWindow().setIcon(inputStream16,inputStream32);
 		try {
 			if (StringUtils.isNotBlank(Config.textX) && StringUtils.isNotBlank(Config.textY)) {
@@ -89,6 +90,9 @@ public abstract class TitleScreenMixin extends Screen {
 		this.addDrawableChild(new ButtonWidget(this.width /2 + 2, j + 48, 98,20 , new LiteralText("Cosmetics"), (button) -> {
 			KreisClient.LOGGER.info("Cosmetics (soon)");
 		}));
+		this.addDrawableChild(new ButtonWidget(0,0,98,20,new LiteralText("AccountManager"), (button -> {
+			MinecraftClient.getInstance().setScreen(new MSAuthScreen(this,account -> {}));
+		})));
 	}
 
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
@@ -109,21 +113,17 @@ public abstract class TitleScreenMixin extends Screen {
 		int l = MathHelper.ceil(g * 255.0F) << 24;
 		drawStringWithShadow(ms, this.textRenderer, "§1KreisClient §8" + MinecraftClient.getInstance().getGame().getVersion().getName(), 2, this.height - 10, 16777215 | l);
 		drawCenteredText(ms, textRenderer, "Your logged in as " + client.getSession().getUsername(), textX, textY, Color.blue.getRGB());
+		drawStringWithShadow(ms, this.textRenderer, "§1KreisClient §8by RusticPrism", this.kreisclientTextX, this.height - 10, Color.white.getRGB());
 
 		super.render(ms, mouseX, mouseY, delta);
 		ci.cancel();
-	}
-
-	@Inject(method = "render", at = @At("TAIL"))
-	public void onBottomRender(MatrixStack ms, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-		drawStringWithShadow(ms, this.textRenderer, "KreisClient by RusticPrism", this.kreisclientTextX, this.height - 10, Color.white.getRGB());
 	}
 
 	@Inject(method = "initWidgetsNormal",at= @At("HEAD"), cancellable = true)
 	public void CustomMultiSinglePlayerButtons(int y, int spacingY, CallbackInfo ci) {
 		ci.cancel();
 		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, y , 200, 20, new TranslatableText("menu.singleplayer"),
-				(button) -> this.client.setScreen(new MSAuthScreen(this, account -> {}))));
+				(button) -> this.client.setScreen(new SelectWorldScreen(this))));
 		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> {
 			this.client.setScreen(new MultiplayerScreen(this));
 		}));
