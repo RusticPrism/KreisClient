@@ -2,14 +2,10 @@ package de.rusticprism.kreisclient.config;
 
 import de.rusticprism.kreisclient.KreisClient;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.MinecraftVersion;
-import net.minecraft.client.MinecraftClient;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.management.MonitorInfo;
-import java.lang.module.Configuration;
 import java.net.URL;
 import java.net.URLConnection;
 

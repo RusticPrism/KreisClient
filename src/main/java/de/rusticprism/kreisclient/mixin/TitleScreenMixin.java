@@ -16,7 +16,6 @@ import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -35,7 +34,6 @@ import java.io.InputStream;
 
 @Mixin(TitleScreen.class)
 public abstract class TitleScreenMixin extends Screen {
-	@Shadow private int copyrightTextX;
 
 	@Shadow public abstract void removed();
 
@@ -75,7 +73,7 @@ public abstract class TitleScreenMixin extends Screen {
 			textX = width / 2;
 			textY = height / 4 + 48 + 72 + 12 + (KreisClient.modMenu?32:22);
 		}
-		this.copyrightTextX = 100000;
+		int copyrightTextX = 100000;
 		int kreisclientTextWidth = this.textRenderer.getWidth("§1KreisClient by §8RusticPrism");
 		this.kreisclientTextX = this.width - kreisclientTextWidth - 2;
 		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, j + 72 + 12, 98, 20, new TranslatableText("menu.options"), (button) -> {
@@ -90,9 +88,8 @@ public abstract class TitleScreenMixin extends Screen {
 		this.addDrawableChild(new ButtonWidget(this.width /2 + 2, j + 48, 98,20 , new TranslatableText("kreisclient.cosmetics"), (button) -> {
 			KreisClient.LOGGER.info("Cosmetics (soon)");
 		}));
-		this.addDrawableChild(new ButtonWidget(0,0,98,20,new TranslatableText("kreisclient.accountmanager"), (button -> {
-			MinecraftClient.getInstance().setScreen(new MSAuthScreen(this,account -> {}));
-		})));
+		this.addDrawableChild(new ButtonWidget(0,0,98,20,new TranslatableText("kreisclient.accountmanager"), (button ->
+				MinecraftClient.getInstance().setScreen(new MSAuthScreen(this, account -> {})))));
 	}
 
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)

@@ -49,10 +49,7 @@ public class KreisClient implements ModInitializer {
 		Discord.startRPC();
 
 
-		ClientLifecycleEvents.CLIENT_STARTED.register(mc -> {
-			Config.load(mc);
-			SkinRenderer.loadAllAsync(MinecraftClient.getInstance(), false, () -> {});
-		});
+		ClientLifecycleEvents.CLIENT_STARTED.register(Config::load);
 
 	}
 }
