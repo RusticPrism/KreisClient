@@ -14,6 +14,4 @@ import java.io.Serializable;
 @Deprecated
 public class Pair implements Serializable {
 	private static final long serialVersionUID = 2586850598481149380L;
-	public String obj1;
-	public AltDatabase obj2;
 }

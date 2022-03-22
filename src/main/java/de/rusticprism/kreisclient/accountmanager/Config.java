@@ -24,37 +24,11 @@ import net.minecraft.client.MinecraftClient;
 
 public class Config {
 	public static final transient Gson GSON = new GsonBuilder().excludeFieldsWithModifiers(Modifier.TRANSIENT).registerTypeAdapter(Account.class, new IASJsonSerializer()).create();
-	
-	public static boolean caseSensitiveSearch;
-	public static String textX, textY, btnX, btnY;
-	public static boolean showOnMPScreen;
-	public static boolean showOnTitleScreen = true;
+
+	public static String textX;
+	public static String textY;
 	public static List<Account> accounts = new ArrayList<>();
-	
-	public static void load(MinecraftClient mc) {
-		try {
-			File f = new File(mc.runDirectory.getPath(), "config/ias.json");
-			if (!f.exists()) return;
-			try (FileReader fr = new FileReader(f)) {
-				GSON.fromJson(fr, Config.class);
-			}
-		} catch (Throwable t) {
-			KreisClient.LOGGER.error("Unable to load config", t);
-		}
-	}
-	
-	public static void save(MinecraftClient mc) {
-		try {
-			File f = new File(mc.runDirectory, "config/ias.json");
-			if (!f.exists()) f.getParentFile().mkdirs();
-			try (FileWriter fw = new FileWriter(f)) {
-				GSON.toJson(new Config(), fw);
-			}
-		} catch (Throwable t) {
-			KreisClient.LOGGER.error("Unable to load config", t);
-		}
-	}
-	
+
 	public static class IASJsonSerializer implements JsonSerializer<Account>, JsonDeserializer<Account> {
 		@Override
 		public Account deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

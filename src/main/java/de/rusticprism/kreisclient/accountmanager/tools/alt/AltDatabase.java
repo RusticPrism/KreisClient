@@ -10,5 +10,4 @@ import java.util.ArrayList;
 @Deprecated
 public class AltDatabase implements Serializable {	
 	public static final long serialVersionUID = 0xA17DA7AB;
-	public ArrayList<AccountData> altList;
 }

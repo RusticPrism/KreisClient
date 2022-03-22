@@ -10,12 +10,7 @@ public class AuthException extends Exception {
 		super(text.getString());
 		this.text = text;
 	}
-	
-	public AuthException(Text text, String detailed) {
-		super(text.getString() + ":" + detailed);
-		this.text = text;
-	}
-	
+
 	public Text getText() {
 		return text;
 	}

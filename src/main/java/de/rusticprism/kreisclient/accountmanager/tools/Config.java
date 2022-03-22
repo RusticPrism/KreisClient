@@ -11,5 +11,4 @@ import java.util.ArrayList;
 @Deprecated
 public class Config implements Serializable {
 	public static final long serialVersionUID = 0xDEADBEEF;
-	public ArrayList<Pair> field_218893_c;
 }

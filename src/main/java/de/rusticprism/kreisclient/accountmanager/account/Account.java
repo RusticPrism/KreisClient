@@ -6,15 +6,15 @@ import java.util.function.Consumer;
 import net.minecraft.client.MinecraftClient;
 
 public interface Account {
-	public String alias();
-	public void login(MinecraftClient mc, Consumer<Throwable> handler);
-	public boolean editable();
-	public boolean online();
-	public void use();
-	public int uses();
-	public long lastUse();
+	String alias();
+	void login(MinecraftClient mc, Consumer<Throwable> handler);
+	boolean editable();
+	boolean online();
+	void use();
+	int uses();
+	long lastUse();
 	
-	public default UUID uuid() {
+	default UUID uuid() {
 		return null;
 	}
 }

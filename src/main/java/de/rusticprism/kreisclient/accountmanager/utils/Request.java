@@ -49,7 +49,7 @@ public class Request {
 	 * Switch to <code>POST</code> mode and send your string encoded in <code>UTF-8</code>,
 	 * @param s String for sending
 	 * @throws IOException If we're unable to send your data
-	 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST
+	 * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST">...</a>
 	 */
 	public void post(String s) throws IOException {
 		conn.setRequestMethod("POST");
@@ -62,7 +62,7 @@ public class Request {
 	/**
 	 * Switch to <code>POST</code> mode and send your data in <i>key=value&key2=value2&key3=value3</i> format
 	 * encoded in <code>UTF-8</code> and <code>URL encoding</code>.
-	 * @param s String for sending
+	 * @param map String for sending
 	 * @throws IOException If we're unable to send your data
 	 * @see #post(String)
 	 */
@@ -76,7 +76,7 @@ public class Request {
 	/**
 	 * Switch to <code>GET</code> mode.
 	 * @throws ProtocolException If we're unable to get
-	 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET
+	 * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET">...</a>
 	 */
 	public void get() throws ProtocolException {
 		conn.setRequestMethod("GET");
@@ -86,7 +86,7 @@ public class Request {
 	 * Get HTTP response code encoded as <code>UTF-8</code>.
 	 * @return HTTP response code
 	 * @throws IOException If we're unable to get response code
-	 * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+	 * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">...</a>
 	 */
 	public int response() throws IOException {
 		return conn.getResponseCode();
