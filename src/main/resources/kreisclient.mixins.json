@@ -14,7 +14,9 @@
     "borderlesswindow.FullScreenOptionMixin",
     "borderlesswindow.VideoModeFixMixin",
     "borderlesswindow.WindowMixin",
-    "borderlesswindow.WindowSettingsMixin"
+    "borderlesswindow.WindowSettingsMixin",
+    "perspective.MouseMixin",
+    "perspective.CameraMixin"
   ],
   "injectors": {
     "defaultRequire": 1
