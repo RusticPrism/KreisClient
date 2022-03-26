@@ -45,7 +45,7 @@ public class MicrosoftAccount implements Account {
 						accessToken, Optional.empty(), Optional.empty(), Session.AccountType.MOJANG));
 				handler.accept(null);
 			});
-		}, "IAS MS Reauth Thread").start();
+		}, "KreisClient Reauth Thread").start();
 	}
 	
 	/**

@@ -1,5 +1,11 @@
 {
     "kreisclient.settings": "Einstellungen",
     "kreisclient.cosmetics": "Kosmetiks",
-    "kreiscraft.accountmanager": "AccountManager"
+    "kreisclient.accountmanager": "AccountManager",
+    "kreisclient.auth.checkbrowser": "Schau in deinen Browser!",
+    "kreisclient.auth.title": "Authentifizierung...",
+    "kreisclient.auth.closenow": "Du kannst diesen Tab nun schließen!",
+    "kreisclient.auth.progress": "Loge ein...",
+    "kreisclient.auth.unknown": "Ich kenne diesen Account nicht!",
+    "kreisclient.gui.cancel": "Abbrechen"
 }

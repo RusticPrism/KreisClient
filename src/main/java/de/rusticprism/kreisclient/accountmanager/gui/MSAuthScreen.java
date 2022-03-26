@@ -44,15 +44,15 @@ public class MSAuthScreen extends Screen {
 	public final Screen prev;
 	private HttpServer srv;
 	private int tick;
-	private Text state = new TranslatableText("ias.msauth.checkbrowser");
+	private Text state = new TranslatableText("kreisclient.auth.checkbrowser");
 	private List<OrderedText> error;
 	private Consumer<Account> handler;
 	
 	public MSAuthScreen(Screen prev, Consumer<Account> handler) {
-		super(new TranslatableText("ias.msauth.title"));
+		super(new TranslatableText("kreisclient.auth.title"));
 		this.prev = prev;
 		this.handler = handler;
-		String done = "<html><body><h1>" + I18n.translate("ias.msauth.canclosenow") + "</h1></body></html>";
+		String done = "<html><body><h1>" + I18n.translate("kreisclient.auth.closenow") + "</h1></body></html>";
 		new Thread(() -> {
 			try {
 				srv = HttpServer.create(new InetSocketAddress(59125), 0);
@@ -60,7 +60,7 @@ public class MSAuthScreen extends Screen {
 					try {
 						ex.getResponseHeaders().add("Location", "http://localhost:59125/end");
 						ex.sendResponseHeaders(302, -1);
-						new Thread(() -> auth(ex.getRequestURI().getQuery()), "IAS MS Auth Thread").start();
+						new Thread(() -> auth(ex.getRequestURI().getQuery()), "KreisClient Auth Thread").start();
 					} catch (Throwable t) {
 						KreisClient.LOGGER.warn("Unable to process request 'auth' on MS auth server", t);
 						try {
@@ -103,7 +103,7 @@ public class MSAuthScreen extends Screen {
                         "&redirect_uri=http://localhost:59125" +
                         "&prompt=consent");
 			} catch (Throwable t) {
-				KreisClient.LOGGER.warn("Unable to start MS auth server", t);
+				KreisClient.LOGGER.warn("Unable to start auth server", t);
 				try {
 					if (srv != null) srv.stop(0);
 				} catch (Throwable th) {
@@ -111,15 +111,15 @@ public class MSAuthScreen extends Screen {
 				}
 				error(t);
 			}
-		}, "IAS MS Auth Server Thread").start();
+		}, "KreisClient Auth Server Thread").start();
 	}
 	
 	private void auth(String query) {
 		try {
-			state = new TranslatableText("ias.msauth.progress");
+			state = new TranslatableText("kreisclient.auth.progress");
 			if (query == null) throw new NullPointerException("query=null");
 			if (query.equals("error=access_denied&error_description=The user has denied access to the scope requested by the client application."))
-				throw new AuthException(new TranslatableText("ias.msauth.error.revoked"));
+				throw new AuthException(new TranslatableText("kreisclient.auth.error.revoked"));
 			if (!query.startsWith("code=")) throw new IllegalStateException("query=" + query);
 			Pair<String, String> authRefreshTokens = Auth.authCode2Token(query.replace("code=", ""));
 			String refreshToken = authRefreshTokens.getRight();
@@ -128,8 +128,6 @@ public class MSAuthScreen extends Screen {
 			String accessToken = Auth.authMinecraft(xstsTokenUserhash.getRight(), xstsTokenUserhash.getLeft());
 			Auth.checkGameOwnership(accessToken);
 			Pair<UUID, String> profile = Auth.getProfile(accessToken);
-			if (Config.accounts.stream().anyMatch(acc -> acc.alias().equalsIgnoreCase(profile.getRight())))
-				throw new AuthException(new TranslatableText("ias.auth.alreadyexists"));
 			client.execute(() -> {
 				if (client.currentScreen == this) {
 					new MicrosoftAccount(profile.getRight(), accessToken, refreshToken, profile.getLeft()).login(MinecraftClient.getInstance(),throwable -> {});
@@ -147,14 +145,14 @@ public class MSAuthScreen extends Screen {
 			if (t instanceof AuthException) {
 				error = textRenderer.wrapLines(((AuthException)t).getText(), width - 20);
 			} else {
-				error = textRenderer.wrapLines(new TranslatableText("ias.auth.unknown", t.toString()), width - 20);
+				error = textRenderer.wrapLines(new TranslatableText("kreisclient.auth.unknown", t.toString()), width - 20);
 			}
 		});
 	}
 
 	@Override
 	public void init() {
-		addDrawableChild(new ButtonWidget(this.width / 2 - 75, this.height - 28, 150, 20, new TranslatableText("gui.cancel"), btn -> client.setScreen(prev)));
+		addDrawableChild(new ButtonWidget(this.width / 2 - 75, this.height - 28, 150, 20, new TranslatableText("kreisclient.gui.cancel"), btn -> client.setScreen(prev)));
 	}
 	
 	@Override
