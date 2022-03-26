@@ -16,7 +16,8 @@
     "borderlesswindow.WindowMixin",
     "borderlesswindow.WindowSettingsMixin",
     "perspective.MouseMixin",
-    "perspective.CameraMixin"
+    "perspective.CameraMixin",
+    "ChatMixin"
   ],
   "injectors": {
     "defaultRequire": 1

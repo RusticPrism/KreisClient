@@ -22,10 +22,12 @@ public class MouseMixin {
         if (KreisClient.INSTANCE.perspectiveEnabled) {
             KreisClient.INSTANCE.cameraYaw += x / 8.0F;
             KreisClient.INSTANCE.cameraPitch += (y * invert * -1) / 8.0F;
-            KreisClient.LOGGER.info(y + " " +  KreisClient.INSTANCE.cameraPitch);
 
-            if (Math.abs(KreisClient.INSTANCE.cameraPitch) > 90.0F) {
-                KreisClient.INSTANCE.cameraPitch = KreisClient.INSTANCE.cameraPitch < 0.0F ? 90.0F : -90.0F;
+            if (KreisClient.INSTANCE.cameraPitch > 90.0F) {
+                KreisClient.INSTANCE.cameraPitch = 90.0F;
+            }
+            if(KreisClient.INSTANCE.cameraPitch < -90.0F) {
+                KreisClient.INSTANCE.cameraPitch = -90.0F;
             }
         }
     }

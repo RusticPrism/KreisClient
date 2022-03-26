@@ -3,6 +3,8 @@ package de.rusticprism.kreisclient;
 import com.google.gson.Gson;
 import de.rusticprism.kreisclient.accountmanager.Config;
 import de.rusticprism.kreisclient.discord.Discord;
+import de.rusticprism.kreisclient.keys.Perspectivekey;
+import de.rusticprism.kreisclient.utils.CommandManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -10,18 +12,24 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.impl.client.keybinding.KeyBindingRegistryImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.util.Session;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
+
+import java.awt.event.KeyListener;
 
 public class KreisClient implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final String MOD_ID = "kreisclient";
+	public static final Session session = MinecraftClient.getInstance().getSession();
+	public static CommandManager cmdMan;
 	public static final Logger LOGGER = LogManager.getLogger("KreisClient");
 	public static KreisClient INSTANCE;
 	public static MinecraftClient MC = MinecraftClient.getInstance();
@@ -30,13 +38,13 @@ public class KreisClient implements ModInitializer {
 	public boolean perspectiveEnabled;
 	public float cameraPitch;
 	public float cameraYaw;
-	private boolean held = false;
-	private static KeyBinding toggleKey;
+	private static KeyBinding perspectiveKey;
 
 	@Override
 	public void onInitialize() {
 		LOGGER.info("KreisClient Started");
 		INSTANCE = this;
+		cmdMan = new CommandManager();
 
 
 		KeyBinding openmodmenu = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -49,28 +57,10 @@ public class KreisClient implements ModInitializer {
 		Discord.startRPC();
 
 
-		KeyBindingRegistryImpl.addCategory("KreisClient");
-		KeyBindingRegistryImpl.registerKeyBinding(toggleKey = new KeyBinding("Perspective Toggle", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_F4, "KreisClient"));
-
+		perspectiveKey = new KeyBinding("Perspective Toggle", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "KreisClient");
 		ClientTickEvents.START_CLIENT_TICK.register(e -> {
-			if (MC.player != null) {
-					this.perspectiveEnabled = toggleKey.isPressed();
-
-					if (this.perspectiveEnabled && !this.held) {
-						this.held = true;
-						this.cameraPitch = MC.player.getPitch();
-						this.cameraYaw = MC.player.getYaw();
-						MC.options.setPerspective(Perspective.THIRD_PERSON_BACK);
-					}
-					if (!this.perspectiveEnabled && this.held) {
-						this.held = false;
-						MC.options.setPerspective(Perspective.FIRST_PERSON);
-					}
-
-					if (this.perspectiveEnabled && MC.options.getPerspective() != Perspective.THIRD_PERSON_BACK) {
-						this.perspectiveEnabled = false;
-					}
-			}
+			Perspectivekey.call(perspectiveKey);
 		});
+
 	}
 }
