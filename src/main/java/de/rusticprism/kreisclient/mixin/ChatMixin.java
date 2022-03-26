@@ -2,11 +2,7 @@ package de.rusticprism.kreisclient.mixin;
 
 import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.utils.Prefix;
-import net.minecraft.client.gui.hud.ChatHud;
-import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

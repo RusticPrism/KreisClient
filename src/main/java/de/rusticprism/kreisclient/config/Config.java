@@ -2,10 +2,6 @@ package de.rusticprism.kreisclient.config;
 
 import de.rusticprism.kreisclient.KreisClient;
 import net.fabricmc.loader.api.FabricLoader;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.lwjgl.system.CallbackI;
 
 import java.io.*;
 import java.net.URL;
@@ -36,7 +32,7 @@ public class Config {
         return KreisClient.class.getClassLoader();
     }
 
-    public static Object get(File file,String path) {
+    public static Object get(File file) {
         File dir = file.getParentFile();
 
         if (!dir.exists()) {
