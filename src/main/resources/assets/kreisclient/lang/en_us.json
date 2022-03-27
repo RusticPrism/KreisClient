@@ -7,5 +7,6 @@
     "kreisclient.auth.closenow": "You can close this tab now!",
     "kreisclient.auth.progress": "Login in...",
     "kreisclient.auth.unknown": "I don´t know that account!",
-    "kreisclient.gui.cancel": "Cancel"
+    "kreisclient.gui.cancel": "Cancel",
+    "kreisclient.options.fov": "FOV"
 }

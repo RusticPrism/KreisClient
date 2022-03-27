@@ -28,7 +28,6 @@ public class KreisClient implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final String MOD_ID = "kreisclient";
-	public static final Session session = MinecraftClient.getInstance().getSession();
 	public static CommandManager cmdMan;
 	public static final Logger LOGGER = LogManager.getLogger("KreisClient");
 	public static KreisClient INSTANCE;
@@ -39,6 +38,7 @@ public class KreisClient implements ModInitializer {
 	public float cameraPitch;
 	public float cameraYaw;
 	private static KeyBinding perspectiveKey;
+	public static KeyBinding zoomKey;
 
 	@Override
 	public void onInitialize() {
@@ -58,6 +58,7 @@ public class KreisClient implements ModInitializer {
 
 
 		perspectiveKey = new KeyBinding("Perspective Toggle", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "KreisClient");
+		KeyBindingHelper.registerKeyBinding(zoomKey = new KeyBinding("Zoom",InputUtil.Type.KEYSYM,67,"KreisClient"));
 		ClientTickEvents.START_CLIENT_TICK.register(e -> {
 			Perspectivekey.call(perspectiveKey);
 		});
