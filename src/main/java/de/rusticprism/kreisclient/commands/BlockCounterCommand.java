@@ -10,7 +10,7 @@ public class BlockCounterCommand implements KreisClientCommand {
     @Override
     public void performCommand(String command, String[] args) {
         if(args.length == 0) {
-            KreisClient.MC.player.sendMessage(new LiteralText("§8Die Anzahl ist §1" + BlockCounter.getamount() + "!"),false   );
+            BlockCounter.Instance.setEnabled(!BlockCounter.Instance.isEnabled());
         }else KreisClient.MC.player.sendMessage(new LiteralText("§cBitte benutze nur " + Prefix.getPrefix() + "blockcounter!"),false);
     }
 }

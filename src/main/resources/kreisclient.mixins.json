@@ -21,7 +21,7 @@
     "perspective.MouseMixin",
     "zoom.ZoomMixin",
     "MinecraftClientMixin",
-    "GameRendererMixin"
+    "ModsRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

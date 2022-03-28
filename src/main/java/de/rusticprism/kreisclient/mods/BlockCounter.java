@@ -5,20 +5,20 @@ import de.rusticprism.kreisclient.modapi.KreisClientMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
-import net.minecraft.text.LiteralText;
-
-import java.awt.*;
 
 public class BlockCounter extends KreisClientMod {
     static MinecraftClient mc = KreisClient.MC;
-    public double positionx;
-    public double positiony;
+    public static BlockCounter Instance;
     private static int blockamount;
 
-    public BlockCounter(double x,double y) {
+    public BlockCounter() {
         super("BlockCounter");
-        this.positionx = x;
-        this.positiony = y;
+        Instance = this;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
     }
 
     public static String getamount() {
@@ -33,9 +33,8 @@ public class BlockCounter extends KreisClientMod {
     }
 
     @Override
-    public void render(MatrixStack matrices,double Xpostion, double Yposition) {
-        MinecraftClient.getInstance().textRenderer.draw(matrices,new LiteralText("Test").asOrderedText(),100,100, 0xAAAE4B36);
-        KreisClient.LOGGER.info("render");
+    public void render(MatrixStack matrices,float Xpostion, float Yposition,int color) {
+        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices,"§8Blocks §1" + getamount(),Xpostion,Yposition,color);
     }
 
     @Override

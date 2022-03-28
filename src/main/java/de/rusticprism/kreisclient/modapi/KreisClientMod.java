@@ -10,7 +10,7 @@ public abstract class KreisClientMod extends Mod {
     public MinecraftClient client;
     public TextRenderer textRenderer;
     public GameRenderer gameRenderer;
-   public void render(MatrixStack matrices,double Xpostion, double Yposition) {
+   public void render(MatrixStack matrices,float Xpostion, float Yposition,int color) {
 
    }
    public KreisClientMod(String modname) {
