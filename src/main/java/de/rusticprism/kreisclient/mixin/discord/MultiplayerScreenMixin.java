@@ -1,4 +1,4 @@
-package de.rusticprism.kreisclient.mixin;
+package de.rusticprism.kreisclient.mixin.discord;
 
 import de.rusticprism.kreisclient.discord.Discord;
 import net.minecraft.client.gui.screen.Screen;
@@ -14,20 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.List;
 
 @Mixin(MultiplayerScreen.class)
-public class MultiplayerScreenMixin extends Screen {
-	private MultiplayerScreenMixin() {
-		super(null);
-	}
-
-	@Inject(method = "render", at = @At("TAIL"))
-	public void onRender(MatrixStack ms, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-		if (client.getSession().getAccessToken().equals("0") || client.getSession().getAccessToken().equals("-")) {
-			List<OrderedText> list = textRenderer.wrapLines(new TranslatableText("ias.offline"), width);
-			for (int i = 0; i < list.size(); i++) {
-				textRenderer.drawWithShadow(ms, list.get(i), width / 2 - textRenderer.getWidth(list.get(i)) / 2, i * 9 + 1, 16737380);
-			}
-		}
-	}
+public class MultiplayerScreenMixin {
 	
 	@Inject(method = "init", at = @At("TAIL"))
 	public void onInit(CallbackInfo ci) {

@@ -1,6 +1,8 @@
-package de.rusticprism.kreisclient.mixin;
+package de.rusticprism.kreisclient.mixin.discord;
 
 import de.rusticprism.kreisclient.discord.Discord;
+import de.rusticprism.kreisclient.modapi.ModRegistery;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.server.integrated.IntegratedServer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

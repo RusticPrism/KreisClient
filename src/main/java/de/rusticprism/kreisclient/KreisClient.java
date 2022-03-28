@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import de.rusticprism.kreisclient.accountmanager.Config;
 import de.rusticprism.kreisclient.discord.Discord;
 import de.rusticprism.kreisclient.keys.Perspectivekey;
+import de.rusticprism.kreisclient.modapi.ModRegistery;
 import de.rusticprism.kreisclient.utils.CommandManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
@@ -28,7 +29,9 @@ public class KreisClient implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final String MOD_ID = "kreisclient";
+	public static final String version = "1.0.0";
 	public static CommandManager cmdMan;
+	public static ModRegistery modRegistery;
 	public static final Logger LOGGER = LogManager.getLogger("KreisClient");
 	public static KreisClient INSTANCE;
 	public static MinecraftClient MC = MinecraftClient.getInstance();
@@ -45,6 +48,7 @@ public class KreisClient implements ModInitializer {
 		LOGGER.info("KreisClient Started");
 		INSTANCE = this;
 		cmdMan = new CommandManager();
+		modRegistery = new ModRegistery();
 
 
 		KeyBinding openmodmenu = KeyBindingHelper.registerKeyBinding(new KeyBinding(

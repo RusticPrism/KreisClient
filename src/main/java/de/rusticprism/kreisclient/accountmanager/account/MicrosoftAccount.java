@@ -1,7 +1,7 @@
 package de.rusticprism.kreisclient.accountmanager.account;
 
 import com.mojang.util.UUIDTypeAdapter;
-import de.rusticprism.kreisclient.mixin.MinecraftClientAccessor;
+import de.rusticprism.kreisclient.mixin.accountmanager.MinecraftClientAccessor;
 import de.rusticprism.kreisclient.accountmanager.utils.Auth;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Session;

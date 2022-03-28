@@ -1,6 +1,7 @@
 package de.rusticprism.kreisclient.utils;
 
 import de.rusticprism.kreisclient.KreisClient;
+import de.rusticprism.kreisclient.commands.BlockCounterCommand;
 import de.rusticprism.kreisclient.commands.FullbrightCommand;
 import de.rusticprism.kreisclient.commands.PrefixCommand;
 
@@ -12,6 +13,7 @@ public class CommandManager {
         this.commands = new ConcurrentHashMap<>();
         this.commands.put("fullbright", new FullbrightCommand());
         this.commands.put("prefix",new PrefixCommand());
+        this.commands.put("blockcounter",new BlockCounterCommand());
     }
 
     public void perform(String command,String[] args) {

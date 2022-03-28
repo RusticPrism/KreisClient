@@ -13,6 +13,6 @@ public class PrefixCommand implements KreisClientCommand {
             KreisClient.LOGGER.info(Prefix.getPrefix());
             Prefix.setPrefix(args[0]);
             MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(new LiteralText("§8Der Prefix ist nun §1" + args[0] + " §8!"));
-        }else MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(new LiteralText("§cBitte benutze +prefix <prefix>!"));
+        }else MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(new LiteralText("§cBitte benutze "+Prefix.getPrefix() +"prefix <prefix>!"));
     }
 }

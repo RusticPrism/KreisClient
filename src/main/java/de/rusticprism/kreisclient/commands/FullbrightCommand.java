@@ -1,6 +1,7 @@
 package de.rusticprism.kreisclient.commands;
 
 import de.rusticprism.kreisclient.utils.KreisClientCommand;
+import de.rusticprism.kreisclient.utils.Prefix;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.LiteralText;
 
@@ -16,6 +17,6 @@ public class FullbrightCommand implements KreisClientCommand {
                 MinecraftClient.getInstance().options.gamma = 1.0;
                 enabled = false;
             }
-        }else MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(new LiteralText("§cBitte benutze nur +fullbright!"));
+        }else MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(new LiteralText("§cBitte benutze nur "+ Prefix.getPrefix() + "fullbright!"));
     }
 }

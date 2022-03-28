@@ -4,22 +4,24 @@
   "package": "de.rusticprism.kreisclient.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-  ],
+      ],
   "client": [
+    "ChatMixin",
+    "OptionScreenMixin",
     "TitleScreenMixin",
-    "MinecraftClientAccessor",
-    "MultiplayerScreenMixin",
-    "ConnectMixin",
-    "SinglePlayerMixin",
+    "accountmanager.MinecraftClientAccessor",
     "borderlesswindow.FullScreenOptionMixin",
     "borderlesswindow.VideoModeFixMixin",
     "borderlesswindow.WindowMixin",
     "borderlesswindow.WindowSettingsMixin",
-    "perspective.MouseMixin",
+    "discord.ConnectMixin",
+    "discord.MultiplayerScreenMixin",
+    "discord.SinglePlayerMixin",
     "perspective.CameraMixin",
-    "ChatMixin",
+    "perspective.MouseMixin",
     "zoom.ZoomMixin",
-    "OptionScreenMixin"
+    "MinecraftClientMixin",
+    "GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

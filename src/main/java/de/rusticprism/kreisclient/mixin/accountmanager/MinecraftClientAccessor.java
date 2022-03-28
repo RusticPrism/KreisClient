@@ -1,4 +1,4 @@
-package de.rusticprism.kreisclient.mixin;
+package de.rusticprism.kreisclient.mixin.accountmanager;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
