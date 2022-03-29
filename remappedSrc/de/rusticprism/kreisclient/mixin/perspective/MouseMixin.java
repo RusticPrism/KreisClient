@@ -14,14 +14,14 @@ public class MouseMixin {
             method = "updateMouse",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/tutorial/TutorialManager;onUpdateMouse(DD)V"
+                    target = "net/minecraft/client/tutorial/TutorialManager.onUpdateMouse(DD)V"
             ),
             locals = LocalCapture.CAPTURE_FAILEXCEPTION
     )
-    private void perspectiveUpdatePitchYaw(CallbackInfo ci, double d, double e, double x, double y, double f, double g, double h, int i) {
+    private void perspectiveUpdatePitchYaw(CallbackInfo info,double adjustedSens, double x, double y,int invert) {
         if (KreisClient.INSTANCE.perspectiveEnabled) {
             KreisClient.INSTANCE.cameraYaw += x / 8.0F;
-            KreisClient.INSTANCE.cameraPitch += (y * i * -1) / 8.0F;
+            KreisClient.INSTANCE.cameraPitch += (y * invert * -1) / 8.0F;
 
             if (KreisClient.INSTANCE.cameraPitch > 90.0F) {
                 KreisClient.INSTANCE.cameraPitch = 90.0F;
