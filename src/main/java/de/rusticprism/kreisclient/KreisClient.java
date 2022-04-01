@@ -15,8 +15,10 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.option.Option;
 import net.minecraft.client.option.Perspective;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.Session;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,6 +59,7 @@ public class KreisClient implements ModInitializer {
 				344,
 				"KreisClient"
 		));
+
 
 		Discord.startRPC();
 

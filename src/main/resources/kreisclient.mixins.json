@@ -2,6 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "de.rusticprism.kreisclient.mixin",
+  "plugin": "de.rusticprism.kreisclient.NarratorOffTransformer",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
       ],
@@ -20,8 +21,9 @@
     "perspective.CameraMixin",
     "perspective.MouseMixin",
     "zoom.ZoomMixin",
+    "zoom.PlayerInventoryMixin",
     "MinecraftClientMixin",
-    "ModsRendererMixin"
+    "ModsRendererMixin",
   ],
   "injectors": {
     "defaultRequire": 1

@@ -15,6 +15,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.IntFunction;
+import java.util.function.ToIntFunction;
 
 @Environment(EnvType.CLIENT)
 public class ButtonWidget extends PressableWidget {

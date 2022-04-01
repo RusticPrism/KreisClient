@@ -23,8 +23,8 @@ public class OptionScreenMixin extends Screen {
             target = "Lnet/minecraft/client/option/Option;createButton(Lnet/minecraft/client/option/GameOptions;III)Lnet/minecraft/client/gui/widget/ClickableWidget;"))
     public ClickableWidget onHigherFov(Option instance, GameOptions gameOptions, int i, int i1, int i2) {
         int i3 = 0;
-        int j = this.width / 2 - 155 + i3 % 2 * 160;
-        int k = this.height / 6 - 12 + 24 * (i3 >> 1);
+        int j = this.width / 2 - 155;
+        int k = this.height / 6 - 12;
         return instance.createButton(this.client.options, j, k, 150);
     }
 }
