@@ -1,16 +1,11 @@
 package de.rusticprism.kreisclient.commands;
 
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.suggestion.Suggestion;
 import com.mojang.brigadier.suggestion.Suggestions;
-import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.utils.KreisClientCommand;
 import de.rusticprism.kreisclient.utils.PacketEvent;
 import de.rusticprism.kreisclient.utils.TickUtil;
-import joptsimple.internal.Strings;
-import meteordevelopment.orbit.EventHandler;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.command.CommandSource;
 import net.minecraft.network.packet.c2s.play.RequestCommandCompletionsC2SPacket;
 import net.minecraft.network.packet.s2c.play.CommandSuggestionsS2CPacket;
 import net.minecraft.text.LiteralText;
@@ -31,7 +26,6 @@ public class ServerCommand implements KreisClientCommand {
         }
         switch (args[0]) {
             case "plugins": {
-                KreisClient.EVENTBUS.subscribe(this);
                 MinecraftClient.getInstance().player.networkHandler.sendPacket(new RequestCommandCompletionsC2SPacket(0,"/"));
                 break;
             }
@@ -52,8 +46,7 @@ public class ServerCommand implements KreisClientCommand {
             }
         }
     }
-    @EventHandler
-    private void onReadPacket(PacketEvent.Receive event) {
+    public static void onReadPacket(PacketEvent.Receive event) {
         try {
             if (event.packet instanceof CommandSuggestionsS2CPacket packet) {
                 List<String> plugins = new ArrayList<>();
@@ -99,7 +92,7 @@ public class ServerCommand implements KreisClientCommand {
         } catch (Exception e) {
         }
     }
-    private String formatName(String name) {
+    private static String formatName(String name) {
         if (ANTICHEAT_LIST.contains(name)) {
             return String.format("%s%s(default)", Formatting.RED, name);
         }

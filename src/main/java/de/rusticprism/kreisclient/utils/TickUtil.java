@@ -1,7 +1,5 @@
 package de.rusticprism.kreisclient.utils;
 
-import de.rusticprism.kreisclient.KreisClient;
-import meteordevelopment.orbit.EventHandler;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
 import java.util.Arrays;
@@ -14,11 +12,7 @@ public class TickUtil {
     private long timeLastTimeUpdate = -1;
     private long timeGameJoined;
 
-    public TickUtil() {
-        KreisClient.EVENTBUS.subscribe(this);
-    }
-    @EventHandler
-    private void onReceivePacket(PacketEvent.Receive event) {
+    public void onReceivePacket(PacketEvent.Receive event) {
         if (event.packet instanceof WorldTimeUpdateS2CPacket) {
             long now = System.currentTimeMillis();
             float timeElapsed = (float) (now - timeLastTimeUpdate) / 1000.0F;
