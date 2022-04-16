@@ -1,11 +1,15 @@
 package de.rusticprism.kreisclient;
 
 import com.google.gson.Gson;
+import com.mojang.text2speech.Narrator;
 import de.rusticprism.kreisclient.accountmanager.Config;
 import de.rusticprism.kreisclient.discord.Discord;
 import de.rusticprism.kreisclient.keys.Perspectivekey;
+import de.rusticprism.kreisclient.mixin.NarratorOffMixin;
 import de.rusticprism.kreisclient.modapi.ModRegistery;
 import de.rusticprism.kreisclient.utils.CommandManager;
+import meteordevelopment.orbit.EventBus;
+import meteordevelopment.orbit.IEventBus;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -13,10 +17,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.impl.client.keybinding.KeyBindingRegistryImpl;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.option.Option;
-import net.minecraft.client.option.Perspective;
+import net.minecraft.client.option.*;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.NarratorManager;
 import net.minecraft.client.util.Session;
@@ -25,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.event.KeyListener;
+import java.lang.invoke.MethodHandles;
 
 public class KreisClient implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -44,6 +46,7 @@ public class KreisClient implements ModInitializer {
 	public float cameraYaw;
 	private static KeyBinding perspectiveKey;
 	public static KeyBinding zoomKey;
+	public static IEventBus EVENTBUS = new EventBus();
 
 	@Override
 	public void onInitialize() {
@@ -51,7 +54,7 @@ public class KreisClient implements ModInitializer {
 		INSTANCE = this;
 		cmdMan = new CommandManager();
 		modRegistery = new ModRegistery();
-
+		EVENTBUS.registerLambdaFactory("de.rusticprism.kreisclient", (lookupInMethod, klass) -> (MethodHandles.Lookup) lookupInMethod.invoke(null, klass, MethodHandles.lookup()));
 
 		KeyBinding openmodmenu = KeyBindingHelper.registerKeyBinding(new KeyBinding(
 				"Open ModMenu",
@@ -59,6 +62,7 @@ public class KreisClient implements ModInitializer {
 				344,
 				"KreisClient"
 		));
+		EVENTBUS.subscribe(this);
 
 
 		Discord.startRPC();

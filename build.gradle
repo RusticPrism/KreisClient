@@ -11,8 +11,11 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
+	maven {
+		name = "meteor-maven"
+		url = "https://maven.meteordev.org"
+	}
 }
-
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -21,9 +24,8 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	modImplementation("net.gudenau.lib:unsafe:1.7.1")
 
-
+	modImplementation("meteordevelopment:orbit:0.2.3")
 
 	implementation fileTree('libs') { include '*.jar' }
 }

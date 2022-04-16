@@ -2,12 +2,14 @@
   "required": true,
   "minVersion": "0.8",
   "package": "de.rusticprism.kreisclient.mixin",
-  "plugin": "de.rusticprism.kreisclient.NarratorOffTransformer",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-      ],
+    "NarratorOffMixin"
+  ],
   "client": [
     "ChatMixin",
+    "MinecraftClientMixin",
+    "ModsRendererMixin",
     "OptionScreenMixin",
     "TitleScreenMixin",
     "accountmanager.MinecraftClientAccessor",
@@ -20,10 +22,9 @@
     "discord.SinglePlayerMixin",
     "perspective.CameraMixin",
     "perspective.MouseMixin",
-    "zoom.ZoomMixin",
     "zoom.PlayerInventoryMixin",
-    "MinecraftClientMixin",
-    "ModsRendererMixin",
+    "zoom.ZoomMixin",
+    "ClientConnectionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

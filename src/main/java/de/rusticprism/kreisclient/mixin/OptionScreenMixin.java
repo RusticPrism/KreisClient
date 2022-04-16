@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(OptionsScreen.class)
 public class OptionScreenMixin extends Screen {
-    private static final Option[] OPTIONS = new Option[]{CustomOptions.FOV};
 
     protected OptionScreenMixin() {
         super(new TranslatableText("options.title"));
@@ -22,9 +21,9 @@ public class OptionScreenMixin extends Screen {
     @Redirect(method = "init",at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/option/Option;createButton(Lnet/minecraft/client/option/GameOptions;III)Lnet/minecraft/client/gui/widget/ClickableWidget;"))
     public ClickableWidget onHigherFov(Option instance, GameOptions gameOptions, int i, int i1, int i2) {
-        int i3 = 0;
+        Option option = CustomOptions.FOV;
         int j = this.width / 2 - 155;
         int k = this.height / 6 - 12;
-        return instance.createButton(this.client.options, j, k, 150);
+        return option.createButton(gameOptions, j, k, 150);
     }
 }
