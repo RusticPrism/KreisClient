@@ -44,6 +44,7 @@ public class Config {
         load("prefix.txt","Prefix","!");
         load("Blockcounter.txt","Enabled","false");
         load("Narrator.txt","Enabled","false");
+        load("TestMod.txt","Enabled","false");
     }
     public static void load(String filename,String path,String value) {
 
@@ -54,6 +55,8 @@ public class Config {
                 config.getParentFile().mkdirs();
                 config.createNewFile();
                 set(filename,path,value);
+                set(filename,"Xpos","1");
+                set(filename,"Ypos","1");
             }
             // if we get through the whole config, it's good to go
         } catch (IOException e) {
@@ -77,7 +80,7 @@ public class Config {
         setting.keySet().forEach(key -> object.put(key, finalSetting.get(key)));
         object.put(path,value);
         try {
-            System.out.println(Files.write(OtherUtil.getPath(getConfigPath(filename)),object.toString().getBytes()));
+            Files.write(OtherUtil.getPath(getConfigPath(filename)),object.toString().getBytes());
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }

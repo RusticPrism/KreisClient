@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import de.rusticprism.kreisclient.config.Config;
 import de.rusticprism.kreisclient.discord.Discord;
 import de.rusticprism.kreisclient.keys.Perspectivekey;
+import de.rusticprism.kreisclient.modapi.ModMenu;
 import de.rusticprism.kreisclient.modapi.ModRegistery;
+import de.rusticprism.kreisclient.mods.TestMod;
 import de.rusticprism.kreisclient.utils.CommandManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -56,7 +58,10 @@ public class KreisClient implements ModInitializer {
 
 		perspectiveKey = new KeyBinding("Perspective Toggle", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "KreisClient");
 		KeyBindingHelper.registerKeyBinding(zoomKey = new KeyBinding("Zoom",InputUtil.Type.KEYSYM,67,"KreisClient"));
-		ClientTickEvents.START_CLIENT_TICK.register(e -> Perspectivekey.call(perspectiveKey));
+		ClientTickEvents.START_CLIENT_TICK.register(e ->  {
+			Perspectivekey.call(perspectiveKey);
+			ModMenu.call(openmodmenu, e.currentScreen);
+		});
 
 
 		//Loading Config...
