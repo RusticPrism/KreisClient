@@ -1,4 +1,4 @@
-package de.rusticprism.kreisclient.mixin;
+package de.rusticprism.kreisclient.mixin.commands;
 
 import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.utils.Prefix;
@@ -18,7 +18,7 @@ public abstract class ChatMixin {
         for(int i = 1; i < args1.length; i++) {
             args[i -1] = args1[i];
         }
-        if(message.startsWith(Prefix.getPrefix())) {
+        if(message.startsWith(Prefix.getCommandPrefix())) {
             KreisClient.cmdMan.perform(message.split(" ")[0],args);
             ci.cancel();
         }

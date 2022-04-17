@@ -1,14 +1,22 @@
 package de.rusticprism.kreisclient.config;
 
 import de.rusticprism.kreisclient.KreisClient;
+import io.netty.util.internal.ObjectUtil;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class Config {
-    public static int data;
     public static InputStream getResource(String filename) {
         if (filename == null) {
             throw new IllegalArgumentException("Filename cannot be null");
@@ -32,52 +40,70 @@ public class Config {
         return KreisClient.class.getClassLoader();
     }
 
-    public static Object get(File file) {
-        File dir = file.getParentFile();
+    public static void loadAll() {
+        load("prefix.txt","Prefix","!");
+        load("Blockcounter.txt","Enabled","false");
+        load("Narrator.txt","Enabled","false");
+    }
+    public static void load(String filename,String path,String value) {
 
-        if (!dir.exists()) {
-            if (!dir.mkdirs()) {
-                KreisClient.LOGGER.warn("Couldn't create Parent File");
-            }
-        } else if (!dir.isDirectory()) {
-            KreisClient.LOGGER.warn("Parent File isn't a directory!");
-        }
-        if(!file.exists()) {
-            try {
-                file.createNewFile();
-                set(file,"+");
-            } catch (IOException e) {
-                KreisClient.LOGGER.warn("Couldn't create " + file.getName());
-            }
-        }
+        // read config from file
         try {
-            FileReader reader = new FileReader(file);
-               data = reader.read();
-                reader.close();
-        } catch (FileNotFoundException e) {
-            KreisClient.LOGGER.warn("Couldnt read " + file.getName() + "!");
+            File config = new File(FabricLoader.getInstance().getConfigDir() + "/KreisClient/" + filename);
+            if(!config.exists()) {
+                config.getParentFile().mkdirs();
+                config.createNewFile();
+                set(filename,path,value);
+            }
+            // if we get through the whole config, it's good to go
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return (char)data;
     }
-        public static void set(File file,String value) {
-        File dir = file.getParentFile();
 
-        if (!dir.exists()) {
-            if (!dir.mkdirs()) {
-                KreisClient.LOGGER.warn("Couldn't create Parent File");
-            }
-        } else if (!dir.isDirectory()) {
-            KreisClient.LOGGER.warn("Parent File isn't a directory!");
+    public static void set(String filename, String path, Object value) {
+        JSONObject setting;
+        try {
+            setting = new JSONObject(new String(Files.readAllBytes(Path.of(getConfigPath(filename)))));
+        } catch (JSONException | IOException e) {
+            Klammern(filename);
+            set(filename,path,value);
+            return;
         }
+
+
+        JSONObject object = new JSONObject();
+        JSONObject finalSetting = setting;
+        setting.keySet().forEach(key -> object.put(key, finalSetting.get(key)));
+        object.put(path,value);
+        try {
+            System.out.println(Files.write(OtherUtil.getPath(getConfigPath(filename)),object.toString().getBytes()));
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static String get(String filename, Object path) {
+        JSONObject setting;
+        try {
+            setting = new JSONObject(new String(Files.readAllBytes(OtherUtil.getPath(getConfigPath(filename)))));
+
+        } catch (JSONException | IOException e) {
+            return null;
+        }
+        setting.get(path.toString());
+        return setting.getString(path.toString());
+    }
+    public static String getConfigPath(String filename) {
+        return FabricLoader.getInstance().getConfigDir() + "/KreisClient/" +filename;
+    }
+    public static void Klammern(String filename) {
+        File file = new File(getConfigPath(filename));
         try {
             FileWriter writer = new FileWriter(file);
-            writer.write(value);
-            writer.flush();
+            writer.write("{ }");
+            writer.close();
         } catch (IOException e) {
-            KreisClient.LOGGER.warn("Couldn't write File!");
+            e.printStackTrace();
         }
     }
-
 }

@@ -15,6 +15,8 @@ repositories {
 		name = "meteor-maven"
 		url = "https://maven.meteordev.org"
 	}
+	jcenter()
+	mavenCentral()
 }
 dependencies {
 	// To change the versions see the gradle.properties file
@@ -22,8 +24,12 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
+
+
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	modImplementation 'org.json:json:20220320'
 
 	implementation fileTree('libs') { include '*.jar' }
 }

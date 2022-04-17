@@ -1,16 +1,17 @@
 package de.rusticprism.kreisclient.commands;
 
-import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.mods.BlockCounter;
 import de.rusticprism.kreisclient.utils.KreisClientCommand;
 import de.rusticprism.kreisclient.utils.Prefix;
-import net.minecraft.text.LiteralText;
 
-public class BlockCounterCommand implements KreisClientCommand {
+public class BlockCounterCommand extends KreisClientCommand {
     @Override
     public void performCommand(String command, String[] args) {
         if(args.length == 0) {
             BlockCounter.Instance.setEnabled(!BlockCounter.Instance.isEnabled());
-        }else KreisClient.MC.player.sendMessage(new LiteralText("§cBitte benutze nur " + Prefix.getPrefix() + "blockcounter!"),false);
+            if(BlockCounter.Instance.isEnabled()) {
+                info("Blockcounter ist nun an!");
+            }else info("Blockcounter ist nun aus!");
+        }else warning("§cBitte benutze nur " + Prefix.getCommandPrefix() + "blockcounter!");
     }
 }

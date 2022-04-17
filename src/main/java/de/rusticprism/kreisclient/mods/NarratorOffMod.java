@@ -1,5 +1,6 @@
 package de.rusticprism.kreisclient.mods;
 
+import de.rusticprism.kreisclient.config.Config;
 import de.rusticprism.kreisclient.modapi.KreisClientMod;
 
 public class NarratorOffMod extends KreisClientMod {
@@ -11,11 +12,11 @@ public class NarratorOffMod extends KreisClientMod {
 
     @Override
     public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
+        Config.set("Narrator.txt","Enabled", String.valueOf(enabled));
     }
 
     @Override
     public boolean isEnabled() {
-        return super.isEnabled();
+       return Boolean.parseBoolean(Config.get("Narrator.txt","Enabled"));
     }
 }

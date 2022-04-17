@@ -1,4 +1,4 @@
-package de.rusticprism.kreisclient.mixin;
+package de.rusticprism.kreisclient.mixin.commands;
 
 import de.rusticprism.kreisclient.commands.ServerCommand;
 import de.rusticprism.kreisclient.utils.PacketEvent;

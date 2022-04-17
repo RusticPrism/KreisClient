@@ -2,16 +2,18 @@ package de.rusticprism.kreisclient.utils;
 
 import de.rusticprism.kreisclient.config.Config;
 
-import java.io.File;
-
 public class Prefix {
-    public static String getPrefix() {
-        if(Config.get(new File("./config/prefix.yml")) == null) {
-            Prefix.setPrefix("+");
+    public static String getCommandPrefix() {
+        if(Config.get("prefix.txt","Prefix") == null) {
+            Prefix.setCommandPrefix("+");
         }
-        return String.valueOf(Config.get(new File("./config/prefix.yml")));
+        return String.valueOf(Config.get("prefix.txt","Prefix"));
     }
-    public static void setPrefix(String prefix) {
-        Config.set(new File("./config/prefix.yml"),prefix);
+    public static void setCommandPrefix(String prefix) {
+        Config.set("prefix.txt","Prefix",prefix);
+    }
+
+    public static String getPrefix() {
+        return "§1KreisClient §8§l>> ";
     }
 }

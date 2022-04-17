@@ -1,4 +1,4 @@
-package de.rusticprism.kreisclient.mixin;
+package de.rusticprism.kreisclient.mixin.mods;
 
 import de.rusticprism.kreisclient.modapi.KreisClientMod;
 import de.rusticprism.kreisclient.modapi.ModRegistery;

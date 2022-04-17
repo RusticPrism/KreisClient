@@ -1,4 +1,4 @@
-package de.rusticprism.kreisclient.mixin;
+package de.rusticprism.kreisclient.mixin.mods;
 
 import de.rusticprism.kreisclient.mods.NarratorOffMod;
 import net.minecraft.client.Keyboard;

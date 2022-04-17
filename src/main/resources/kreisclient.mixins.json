@@ -4,12 +4,12 @@
   "package": "de.rusticprism.kreisclient.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "NarratorOffMixin"
+    "mods.NarratorOffMixin"
   ],
   "client": [
-    "ChatMixin",
+    "commands.ChatMixin",
     "MinecraftClientMixin",
-    "ModsRendererMixin",
+    "mods.ModsRendererMixin",
     "OptionScreenMixin",
     "TitleScreenMixin",
     "accountmanager.MinecraftClientAccessor",
@@ -24,7 +24,7 @@
     "perspective.MouseMixin",
     "zoom.PlayerInventoryMixin",
     "zoom.ZoomMixin",
-    "ClientConnectionMixin"
+    "commands.ClientConnectionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

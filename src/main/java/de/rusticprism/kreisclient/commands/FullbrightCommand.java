@@ -5,7 +5,7 @@ import de.rusticprism.kreisclient.utils.Prefix;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.LiteralText;
 
-public class FullbrightCommand implements KreisClientCommand {
+public class FullbrightCommand extends KreisClientCommand {
     private boolean enabled = false;
     @Override
     public void performCommand(String command, String[] args) {
@@ -13,10 +13,12 @@ public class FullbrightCommand implements KreisClientCommand {
             if(!enabled || MinecraftClient.getInstance().options.gamma <= 1.0) {
                 enabled = true;
                 MinecraftClient.getInstance().options.gamma = 50.0;
+                info("Fullbright ist nun an!");
             }else {
                 MinecraftClient.getInstance().options.gamma = 1.0;
                 enabled = false;
+                info("Fullbright ist nun aus!");
             }
-        }else MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(new LiteralText("§cBitte benutze nur "+ Prefix.getPrefix() + "fullbright!"));
+        }else warning("§cBitte benutze nur "+ Prefix.getCommandPrefix() + "fullbright!");
     }
 }

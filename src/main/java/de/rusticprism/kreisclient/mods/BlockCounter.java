@@ -1,6 +1,7 @@
 package de.rusticprism.kreisclient.mods;
 
 import de.rusticprism.kreisclient.KreisClient;
+import de.rusticprism.kreisclient.config.Config;
 import de.rusticprism.kreisclient.modapi.KreisClientMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
@@ -18,7 +19,12 @@ public class BlockCounter extends KreisClientMod {
 
     @Override
     public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
+        Config.set("Blockcounter.txt","Enabled", String.valueOf(enabled));
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return Boolean.parseBoolean(Config.get("Blockcounter.txt","Enabled"));
     }
 
     public static String getamount() {
