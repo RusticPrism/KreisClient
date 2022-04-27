@@ -1,11 +1,9 @@
 package de.rusticprism.kreisclient.config;
 
 import de.rusticprism.kreisclient.KreisClient;
-import io.netty.util.internal.ObjectUtil;
+import de.rusticprism.kreisclient.utils.json.JSONException;
+import de.rusticprism.kreisclient.utils.json.JSONObject;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.MinecraftClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -86,12 +84,13 @@ public class Config {
         }
     }
     public static String get(String filename, Object path) {
-        JSONObject setting;
+        JSONObject setting = null;
         try {
             setting = new JSONObject(new String(Files.readAllBytes(OtherUtil.getPath(getConfigPath(filename)))));
 
         } catch (JSONException | IOException e) {
-            return null;
+            Klammern(filename);
+            get(filename,path);
         }
         setting.get(path.toString());
         return setting.getString(path.toString());

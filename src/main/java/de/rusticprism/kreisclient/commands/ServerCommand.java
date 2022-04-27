@@ -17,6 +17,7 @@ import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
+import net.minecraft.world.GameRules;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -127,7 +128,6 @@ public class ServerCommand extends KreisClientCommand {
         }
 
         ServerInfo server = MinecraftClient.getInstance().getCurrentServerEntry();
-
         if (server == null) {
             info("Couldn't obtain any server information.");
             return;

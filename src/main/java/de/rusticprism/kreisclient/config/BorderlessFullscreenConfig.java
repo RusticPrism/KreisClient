@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class BorderlessFullscreenConfig {
-    private static final transient Path configFile = FabricLoader.getInstance().getConfigDir().resolve("kreisclient/borderlessfullscreen.json");
+    private static final transient Path configFile = OtherUtil.getPath(Config.getConfigPath("borderlessfullscreen.txt"));
     private static final transient Logger LOGGER = KreisClient.LOGGER;
 
     private BorderlessFullscreenConfig() {

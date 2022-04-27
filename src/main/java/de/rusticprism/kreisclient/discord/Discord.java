@@ -1,9 +1,6 @@
 package de.rusticprism.kreisclient.discord;
 
-import com.google.common.eventbus.Subscribe;
 import de.rusticprism.kreisclient.KreisClient;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.minecraft.client.MinecraftClient;
 
 public class Discord {
     private static String discordID = "922209722839465995";

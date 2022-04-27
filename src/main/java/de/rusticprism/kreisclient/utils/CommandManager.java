@@ -1,6 +1,9 @@
 package de.rusticprism.kreisclient.utils;
 
 import de.rusticprism.kreisclient.commands.*;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.LiteralText;
+import org.checkerframework.checker.regex.qual.PartialRegex;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,6 +22,6 @@ public class CommandManager {
         KreisClientCommand cmd;
         if((cmd = this.commands.get(command.toLowerCase().substring(1))) != null) {
             cmd.performCommand(command,args);
-        }
+        }else MinecraftClient.getInstance().player.sendMessage(new LiteralText(Prefix.getPrefix() + "Kein Command"),false);
     }
 }

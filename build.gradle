@@ -11,11 +11,6 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven {
-		name = "meteor-maven"
-		url = "https://maven.meteordev.org"
-	}
-	jcenter()
 	mavenCentral()
 }
 dependencies {
@@ -28,8 +23,9 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modCompileClasspath 'org.json:json:20220320'
 
-	modImplementation 'org.json:json:20220320'
+	//modImplementation 'org.json:json:20220320'
 
 	implementation fileTree('libs') { include '*.jar' }
 }

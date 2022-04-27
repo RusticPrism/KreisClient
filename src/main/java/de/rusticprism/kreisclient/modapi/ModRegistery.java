@@ -13,8 +13,8 @@ public class ModRegistery {
     public ModRegistery() {
         mods = new ArrayList<>();
         register(new BlockCounter());
-        register(new TestMod());
-       // register(new NarratorOffMod());
+        //register(new TestMod());
+        register(new NarratorOffMod());
     }
     public static void register(KreisClientMod mod) {
         mods.add(mod);
