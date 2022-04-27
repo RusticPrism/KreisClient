@@ -17,7 +17,6 @@ import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.GameRules;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -28,6 +27,7 @@ import java.util.List;
 
 public class ServerCommand extends KreisClientCommand {
     private static final List<String> ANTICHEAT_LIST = Arrays.asList("nocheatplus", "negativity", "warden", "horizon", "illegalstack", "coreprotect", "exploitsx");
+    private static boolean valid = false;
 
     @Override
     public void performCommand(String command, String[] args) {
@@ -36,11 +36,12 @@ public class ServerCommand extends KreisClientCommand {
             return;
         }
         switch (args[0].toLowerCase()) {
-            case "plugins": {
+            case "plugins" -> {
+                valid = true;
+                assert MinecraftClient.getInstance().player != null;
                 MinecraftClient.getInstance().player.networkHandler.sendPacket(new RequestCommandCompletionsC2SPacket(0, "/"));
-                break;
             }
-            case "tps": {
+            case "tps" -> {
                 double tps = Math.round(TickUtil.INSTANCE.getTickRate() * 100.0) / 100.0;
                 String TPS;
                 if (tps > 17.00) {
@@ -48,62 +49,57 @@ public class ServerCommand extends KreisClientCommand {
                 } else if (tps > 10.00) {
                     TPS = "Die Server TPS ist: §e" + tps;
                 } else TPS = "Die Server TPS ist: §4" + tps;
-               info(TPS);
-                break;
+                info(TPS);
             }
-            case "info" : {
-                basicInfo();
-                break;
-            }
-            default: {
-                warning("Bitte benutze "+ Prefix.getCommandPrefix() +"server <pluins/tps/info>!");
-                break;
-            }
+            case "info" -> basicInfo();
+            default -> warning("Bitte benutze " + Prefix.getCommandPrefix() + "server <pluins/tps/info>!");
         }
     }
 
     public static void onReadPacket(PacketEvent.Receive event) {
-        try {
-            if (event.packet instanceof CommandSuggestionsS2CPacket packet) {
-                List<String> plugins = new ArrayList<>();
-                Suggestions matches = packet.getSuggestions();
+        if(valid) {
+            try {
+                if (event.packet instanceof CommandSuggestionsS2CPacket packet) {
+                    List<String> plugins = new ArrayList<>();
+                    Suggestions matches = packet.getSuggestions();
 
-                if (matches == null) {
-                    warning("Error");
-                    return;
-                }
+                    if (matches == null) {
+                        warning("Error");
+                        return;
+                    }
 
-                for (Suggestion yes : matches.getList()) {
-                    String[] command = yes.getText().split(":");
-                    if (command.length > 1) {
-                        String pluginName = command[0].replace("/", "");
+                    for (Suggestion yes : matches.getList()) {
+                        String[] command = yes.getText().split(":");
+                        if (command.length > 1) {
+                            String pluginName = command[0].replace("/", "");
 
-                        if (!plugins.contains(pluginName)) {
-                            plugins.add(pluginName);
+                            if (!plugins.contains(pluginName)) {
+                                plugins.add(pluginName);
+                            }
                         }
                     }
-                }
 
-                Collections.sort(plugins);
-                for (int i = 0; i < plugins.size(); i++) {
-                    plugins.set(i, formatName(plugins.get(i)));
-                }
+                    Collections.sort(plugins);
+                    plugins.replaceAll(ServerCommand::formatName);
 
-                if (!plugins.isEmpty()) {
-                    StringBuilder builder = new StringBuilder();
-                    for (String str : plugins) {
-                        String msg = "";
-                        msg = str.replaceAll("\\(default\\)", Formatting.GRAY.toString());
-                        msg = msg.replaceAll("\\(highlight\\)", Formatting.GREEN.toString());
-                        msg = msg.replaceAll("\\(underline\\)", Formatting.UNDERLINE.toString());
-                        builder.append(msg);
-                        builder.append(", ");
+                    if (!plugins.isEmpty()) {
+                        StringBuilder builder = new StringBuilder();
+                        for (String str : plugins) {
+                            String msg;
+                            msg = str.replaceAll("\\(default\\)", Formatting.GRAY.toString());
+                            msg = msg.replaceAll("\\(highlight\\)", Formatting.GREEN.toString());
+                            msg = msg.replaceAll("\\(underline\\)", Formatting.UNDERLINE.toString());
+                            builder.append(msg);
+                            builder.append(", ");
+                        }
+                        info("Die Plugins des Servers sind: " + builder);
+                        valid = false;
                     }
-                    info("Die Plugins des Servers sind: " + builder);
                 }
-            }
 
-        } catch (Exception e) {
+            } catch (Exception ignored) {
+                warning("Couldn't load Server Plugins!");
+            }
         }
     }
 
