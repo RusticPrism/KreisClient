@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientConnection.class)
 public class ClientConnectionMixin {
+
     @Inject(method = "handlePacket", at = @At("HEAD"))
     private static <T extends PacketListener> void onHandlePacket(Packet<T> packet, PacketListener listener, CallbackInfo info) {
         ServerCommand.onReadPacket(PacketEvent.Receive.get(packet));

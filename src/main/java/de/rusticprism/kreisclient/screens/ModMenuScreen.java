@@ -63,6 +63,6 @@ public class ModMenuScreen extends Screen {
         drawTexture(matrices, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
 
         super.render(matrices,mouseX,mouseY,delta);
-        this.addDrawableChild(new ButtonWidget(this.width - 98,0,98,20,new TranslatableText("kreisclient.gui.cancel"), onpress-> MinecraftClient.getInstance().setScreen(previous)));
+        this.addDrawableChild(new ButtonWidget(this.width - 98,0,98,20,new TranslatableText("kreisclient.gui.cancel"), onpress-> MinecraftClient.getInstance().currentScreen.close()));
     }
 }

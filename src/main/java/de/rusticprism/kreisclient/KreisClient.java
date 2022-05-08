@@ -59,7 +59,7 @@ public class KreisClient implements ModInitializer {
 		KeyBindingHelper.registerKeyBinding(zoomKey = new KeyBinding("Zoom",InputUtil.Type.KEYSYM,67,"KreisClient"));
 		ClientTickEvents.START_CLIENT_TICK.register(e ->  {
 			Perspectivekey.call(perspectiveKey);
-			//ModMenu.call(openmodmenu, e.currentScreen);
+			ModMenu.call(openmodmenu, e.currentScreen);
 		});
 
 
