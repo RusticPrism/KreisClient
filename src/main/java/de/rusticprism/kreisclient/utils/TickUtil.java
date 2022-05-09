@@ -1,5 +1,7 @@
 package de.rusticprism.kreisclient.utils;
 
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.PacketListener;
 import net.minecraft.network.packet.s2c.play.WorldTimeUpdateS2CPacket;
 
 import java.util.Arrays;
@@ -12,8 +14,8 @@ public class TickUtil {
     private long timeLastTimeUpdate = -1;
     private long timeGameJoined;
 
-    public void onReceivePacket(PacketEvent.Receive event) {
-        if (event.packet instanceof WorldTimeUpdateS2CPacket) {
+    public <T extends PacketListener> void onReceivePacket(Packet<T> packet) {
+        if (packet instanceof WorldTimeUpdateS2CPacket) {
             long now = System.currentTimeMillis();
             float timeElapsed = (float) (now - timeLastTimeUpdate) / 1000.0F;
             tickRates[nextIndex] = clamp(20.0f / timeElapsed, 0.0f, 20.0f);
@@ -47,18 +49,10 @@ public class TickUtil {
         if (now - timeGameJoined < 4000) return 0;
         return (now - timeLastTimeUpdate) / 1000f;
     }
-    public static int clamp(int value, int min, int max) {
-        if (value < min) return min;
-        return Math.min(value, max);
-    }
 
     public static float clamp(float value, float min, float max) {
         if (value < min) return min;
         return Math.min(value, max);
     }
 
-    public static double clamp(double value, double min, double max) {
-        if (value < min) return min;
-        return Math.min(value, max);
-    }
 }

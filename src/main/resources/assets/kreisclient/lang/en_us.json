@@ -2,7 +2,7 @@
     "kreisclient.settings": "Settings",
     "kreisclient.cosmetics": "Cosmetics",
     "kreisclient.accountmanager": "AccountManager",
-    "kreisclient.auth.checkbrowser": "Look in your browser!",
+    "kreisclient.auth.checkbrowser": "Check your browser!",
     "kreisclient.auth.title": "Authenticating...",
     "kreisclient.auth.closenow": "You can close this tab now!",
     "kreisclient.auth.progress": "Login in...",

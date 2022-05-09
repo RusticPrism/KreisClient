@@ -3,7 +3,6 @@ package de.rusticprism.kreisclient.utils;
 import de.rusticprism.kreisclient.commands.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.LiteralText;
-import org.checkerframework.checker.regex.qual.PartialRegex;
 
 import java.util.concurrent.ConcurrentHashMap;
 

@@ -3,12 +3,13 @@ package de.rusticprism.kreisclient.commands;
 import com.mojang.brigadier.suggestion.Suggestion;
 import com.mojang.brigadier.suggestion.Suggestions;
 import de.rusticprism.kreisclient.utils.KreisClientCommand;
-import de.rusticprism.kreisclient.utils.PacketEvent;
 import de.rusticprism.kreisclient.utils.Prefix;
 import de.rusticprism.kreisclient.utils.TickUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.PacketListener;
 import net.minecraft.network.packet.c2s.play.RequestCommandCompletionsC2SPacket;
 import net.minecraft.network.packet.s2c.play.CommandSuggestionsS2CPacket;
 import net.minecraft.server.integrated.IntegratedServer;
@@ -17,11 +18,13 @@ import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.GameRules;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class ServerCommand extends KreisClientCommand {
     private static final List<String> ANTICHEAT_LIST = Arrays.asList("nocheatplus", "negativity", "warden", "horizon", "illegalstack", "coreprotect", "exploitsx");
@@ -34,12 +37,12 @@ public class ServerCommand extends KreisClientCommand {
             return;
         }
         switch (args[0].toLowerCase()) {
-            case "plugins": {
+            case "plugins" -> {
                 valid = true;
+                assert MinecraftClient.getInstance().player != null;
                 MinecraftClient.getInstance().player.networkHandler.sendPacket(new RequestCommandCompletionsC2SPacket(0, "/"));
-                break;
             }
-            case "tps": {
+            case "tps" -> {
                 double tps = Math.round(TickUtil.INSTANCE.getTickRate() * 100.0) / 100.0;
                 String TPS;
                 if (tps > 17.00) {
@@ -47,23 +50,16 @@ public class ServerCommand extends KreisClientCommand {
                 } else if (tps > 10.00) {
                     TPS = "Die Server TPS ist: §e" + tps;
                 } else TPS = "Die Server TPS ist: §4" + tps;
-               info(TPS);
-                break;
+                info(TPS);
             }
-            case "info" : {
-                basicInfo();
-                break;
-            }
-            default: {
-                warning("Bitte benutze "+ Prefix.getCommandPrefix() +"server <pluins/tps/info>!");
-                break;
-            }
+            case "info" -> basicInfo();
+            default -> warning("Bitte benutze " + Prefix.getCommandPrefix() + "server <pluins/tps/info>!");
         }
     }
 
-    public static void onReadPacket(PacketEvent.Receive event) {
+    public static <T extends PacketListener> void onReadPacket(Packet<T> packet1) {
             try {
-                if (event.packet instanceof CommandSuggestionsS2CPacket packet && valid) {
+                if (packet1 instanceof CommandSuggestionsS2CPacket packet && valid) {
                     List<String> plugins = new ArrayList<>();
                     Suggestions matches = packet.getSuggestions();
 
@@ -89,7 +85,7 @@ public class ServerCommand extends KreisClientCommand {
                     if (!plugins.isEmpty()) {
                         StringBuilder builder = new StringBuilder();
                         for (String str : plugins) {
-                            String msg = "";
+                            String msg;
                             msg = str.replaceAll("\\(default\\)", Formatting.GRAY.toString());
                             msg = msg.replaceAll("\\(highlight\\)", Formatting.GREEN.toString());
                             msg = msg.replaceAll("\\(underline\\)", Formatting.UNDERLINE.toString());
@@ -166,7 +162,7 @@ public class ServerCommand extends KreisClientCommand {
                                 new LiteralText("Copy to clipboard")
                         ))
                 );
-                BaseText ipv4Text = new LiteralText(String.format("%s (%s)", Formatting.GRAY, ipv4));
+                BaseText ipv4Text = new LiteralText(String.format("%s (%s)", Formatting.DARK_GRAY, ipv4));
                 ipv4Text.setStyle(ipText.getStyle()
                         .withClickEvent(new ClickEvent(
                                 ClickEvent.Action.COPY_TO_CLIPBOARD,
@@ -180,7 +176,10 @@ public class ServerCommand extends KreisClientCommand {
                 ipText.append(ipv4Text);
             }
 
-            info("IP: " + ipText.asString() + " (" + ipv4 + ")");
+        info(
+                new LiteralText(String.format("%sIP: ", Formatting.DARK_GRAY))
+                        .append(ipText)
+        );
 
             info("Port: " + ServerAddress.parse(server.address).getPort());
 
@@ -199,6 +198,8 @@ public class ServerCommand extends KreisClientCommand {
             info("Day: " + MinecraftClient.getInstance().world.getTimeOfDay() / 24000L);
 
             info("Permission level: " + formatPerms());
+
+            info("Time since last Tick: " + TickUtil.INSTANCE.getTimeSinceLastTick());
         }
     public String formatPerms() {
         int p = 5;

@@ -2,6 +2,7 @@ package de.rusticprism.kreisclient.utils;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 public abstract class KreisClientCommand {
 
@@ -12,5 +13,8 @@ public abstract class KreisClientCommand {
     }
     public static void warning(String text) {
         MinecraftClient.getInstance().player.sendMessage(new LiteralText(Prefix.getPrefix() + "§c" + text),false);
+    }
+    public static void info(Text text) {
+        MinecraftClient.getInstance().player.sendMessage(text,false);
     }
 }

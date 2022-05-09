@@ -7,7 +7,6 @@ import net.minecraft.util.math.MathHelper;
 public class Zoom {
     private static boolean currentlyZoomed;
     private static boolean originalSmoothCameraEnabled;
-    private static boolean scrollableZoom = true;
     private static final double defaultLevel = 3;
     private static Double defaultMouseSensitivity;
 

@@ -1,6 +1,5 @@
 package de.rusticprism.kreisclient.mixin.borderlesswindow;
 
-import de.rusticprism.kreisclient.config.BorderlessFullscreenConfig;
 import de.rusticprism.kreisclient.utils.SettingBorderlessFullscreen;
 import net.minecraft.client.WindowSettings;
 import org.spongepowered.asm.mixin.Final;

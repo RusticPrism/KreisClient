@@ -46,19 +46,16 @@ public class MSAuthScreen extends Screen {
 	private int tick;
 	private Text state = new TranslatableText("kreisclient.auth.checkbrowser");
 	private List<OrderedText> error;
-	private Consumer<Account> handler;
-	
-	public MSAuthScreen(Screen prev, Consumer<Account> handler) {
+
+	public MSAuthScreen(Screen prev) {
 		super(new TranslatableText("kreisclient.auth.title"));
 		this.prev = prev;
-		this.handler = handler;
-		String done = "<html><body><h1>" + I18n.translate("kreisclient.auth.closenow") + "</h1></body></html>";
 		new Thread(() -> {
 			try {
 				srv = HttpServer.create(new InetSocketAddress(59125), 0);
 	        	srv.createContext("/", ex -> {
 					try {
-						ex.getResponseHeaders().add("Location", "http://localhost:59125/end");
+						ex.getResponseHeaders().add("Location", "http://client.kreiscraft.de/closenow");
 						ex.sendResponseHeaders(302, -1);
 						new Thread(() -> auth(ex.getRequestURI().getQuery()), "KreisClient Auth Thread").start();
 					} catch (Throwable t) {
@@ -67,31 +64,6 @@ public class MSAuthScreen extends Screen {
 							if (srv != null) srv.stop(0);
 						} catch (Throwable th) {
 							KreisClient.LOGGER.warn("Unable to stop fail-requested MS auth server", th);
-						}
-					}
-				});
-	        	srv.createContext("/end", new HttpHandler() {
-					public void handle(HttpExchange ex) throws IOException {
-						try {
-							byte[] b = done.getBytes(StandardCharsets.UTF_8);
-							ex.getResponseHeaders().put("Content-Type", Arrays.asList("text/html; charset=UTF-8"));
-							ex.sendResponseHeaders(200, b.length);
-							OutputStream os = ex.getResponseBody();
-							os.write(b);
-							os.flush();
-							os.close();
-							try {
-								if (srv != null) srv.stop(0);
-							} catch (Throwable th) {
-								KreisClient.LOGGER.warn("Unable to stop MS auth server", th);
-							}
-						} catch (Throwable t) {
-							KreisClient.LOGGER.warn("Unable to process request 'end' on MS auth server", t);
-							try {
-								if (srv != null) srv.stop(0);
-							} catch (Throwable th) {
-								KreisClient.LOGGER.warn("Unable to stop fail-requested MS auth server", th);
-							}
 						}
 					}
 				});

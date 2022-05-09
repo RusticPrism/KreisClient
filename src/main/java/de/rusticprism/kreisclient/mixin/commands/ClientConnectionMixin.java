@@ -1,7 +1,6 @@
 package de.rusticprism.kreisclient.mixin.commands;
 
 import de.rusticprism.kreisclient.commands.ServerCommand;
-import de.rusticprism.kreisclient.utils.PacketEvent;
 import de.rusticprism.kreisclient.utils.TickUtil;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.Packet;
@@ -16,7 +15,7 @@ public class ClientConnectionMixin {
 
     @Inject(method = "handlePacket", at = @At("HEAD"))
     private static <T extends PacketListener> void onHandlePacket(Packet<T> packet, PacketListener listener, CallbackInfo info) {
-        ServerCommand.onReadPacket(PacketEvent.Receive.get(packet));
-        TickUtil.INSTANCE.onReceivePacket(PacketEvent.Receive.get(packet));
+        ServerCommand.onReadPacket(packet);
+        TickUtil.INSTANCE.onReceivePacket(packet);
     }
 }

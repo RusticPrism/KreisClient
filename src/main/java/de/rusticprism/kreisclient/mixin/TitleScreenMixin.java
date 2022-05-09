@@ -88,7 +88,7 @@ public abstract class TitleScreenMixin extends Screen {
 			KreisClient.LOGGER.info("Cosmetics (soon)");
 		}));
 		this.addDrawableChild(new ButtonWidget(0,0,98,20,new TranslatableText("kreisclient.accountmanager"), (button ->
-				MinecraftClient.getInstance().setScreen(new MSAuthScreen(this, account -> {})))));
+				MinecraftClient.getInstance().setScreen(new MSAuthScreen(this)))));
 	}
 
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
