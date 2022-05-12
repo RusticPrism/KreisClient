@@ -8,5 +8,7 @@
     "kreisclient.auth.progress": "Loge ein...",
     "kreisclient.auth.unknown": "Ich kenne diesen Account nicht!",
     "kreisclient.gui.cancel": "Abbrechen",
-    "kreisclient.options.fov": "FOV"
+    "kreisclient.options.fov": "FOV",
+    "kreisclient.auth.error.revoked": "Error: Auth Revoked!",
+    "kreisclient.auth.error.noxbox" : "Error: Noxbox"
 }

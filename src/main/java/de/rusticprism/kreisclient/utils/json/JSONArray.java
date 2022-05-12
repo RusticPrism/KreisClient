@@ -19,7 +19,7 @@ public class JSONArray implements Iterable<Object> {
      * Construct an empty JSONArray.
      */
     public JSONArray() {
-        this.myArrayList = new ArrayList<Object>();
+        this.myArrayList = new ArrayList<>();
     }
 
     /**
@@ -97,9 +97,9 @@ public class JSONArray implements Iterable<Object> {
      */
     public JSONArray(Collection<?> collection) {
         if (collection == null) {
-            this.myArrayList = new ArrayList<Object>();
+            this.myArrayList = new ArrayList<>();
         } else {
-            this.myArrayList = new ArrayList<Object>(collection.size());
+            this.myArrayList = new ArrayList<>(collection.size());
             this.addAll(collection, true);
         }
     }

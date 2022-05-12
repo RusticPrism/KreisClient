@@ -11,10 +11,10 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-public class MicrosoftAccount implements Account {
-	public String username;
-	public String accessToken;
-	public String refreshToken;
+public class MicrosoftAccount {
+	private String username;
+	private String accessToken;
+	private String refreshToken;
 	private UUID uuid;
 	private int uses;
 	private long lastUse;
@@ -26,12 +26,10 @@ public class MicrosoftAccount implements Account {
 		this.uuid = uuid;
 	}
 
-	@Override
 	public String alias() {
 		return username;
 	}
-	
-	@Override
+
 	public void login(MinecraftClient mc, Consumer<Throwable> handler) {
 		new Thread(() -> {
 			try {
@@ -78,33 +76,27 @@ public class MicrosoftAccount implements Account {
     	}
 	}
 
-	@Override
 	public boolean editable() {
 		return false;
 	}
 
-	@Override
 	public boolean online() {
 		return true;
 	}
 
-	@Override
 	public int uses() {
 		return uses;
 	}
 
-	@Override
 	public long lastUse() {
 		return lastUse;
 	}
 
-	@Override
 	public void use() {
 		uses++;
 		lastUse = System.currentTimeMillis();
 	}
-	
-	@Override
+
 	public UUID uuid() {
 		return uuid;
 	}

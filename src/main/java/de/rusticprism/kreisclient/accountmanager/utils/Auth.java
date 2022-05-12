@@ -1,6 +1,5 @@
 package de.rusticprism.kreisclient.accountmanager.utils;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mojang.util.UUIDTypeAdapter;
@@ -14,12 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * Class for Microsoft authentication system.<br>
- * Created using <code>wiki.vg</code> info.
- * @author VidTu
- * @see <a href="https://wiki.vg/Microsoft_Authentication_Scheme">...</a>
- */
 public class Auth {
     /**
      * Process <code>Authorization Code -> Authorization Token</code> step.
@@ -114,7 +107,7 @@ public class Auth {
         req.addProperty("RelyingParty", "rp://api.minecraftservices.com/");
         req.addProperty("TokenType", "JWT");
         pr.post(req.toString()); //Note: Here we're encoding parameters as JSON. ('key': 'value')
-        if (pr.response() == 401) throw new AuthException(new TranslatableText("ias.msauth.error.noxbox"));
+        if (pr.response() == 401) throw new AuthException(new TranslatableText("kreisclient.auth.error.noxbox"));
         if (pr.response() < 200 || pr.response() >= 300) throw new IllegalArgumentException("authXSTS response: " + pr.response());
         JsonObject resp = KreisClient.GSON.fromJson(pr.body(), JsonObject.class);
         return Pair.of(resp.get("Token").getAsString(), resp.getAsJsonObject("DisplayClaims")

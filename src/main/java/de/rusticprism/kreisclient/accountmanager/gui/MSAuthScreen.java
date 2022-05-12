@@ -1,34 +1,25 @@
 package de.rusticprism.kreisclient.accountmanager.gui;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import de.rusticprism.kreisclient.KreisClient;
-import de.rusticprism.kreisclient.accountmanager.Config;
-import de.rusticprism.kreisclient.accountmanager.account.Account;
 import de.rusticprism.kreisclient.accountmanager.account.AuthException;
 import de.rusticprism.kreisclient.accountmanager.account.MicrosoftAccount;
 import de.rusticprism.kreisclient.accountmanager.utils.Auth;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.logging.log4j.core.config.yaml.YamlConfiguration;
 import org.lwjgl.glfw.GLFW;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Consumer;
 
 /**
  * Screen for adding Microsoft accounts.
