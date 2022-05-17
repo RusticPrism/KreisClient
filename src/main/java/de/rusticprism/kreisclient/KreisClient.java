@@ -59,12 +59,6 @@ public class KreisClient implements ModInitializer {
 
 
 		Discord.startRPC();
-		try {
-			FileConfiguration configuration = new YamlConfiguration(new File(FabricLoader.getInstance().getConfigDir() + "/KreisClient/prefix.txt"));
-			configuration.set("Kreis","Mais");
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 
 		perspectiveKey = new KeyBinding("Perspective Toggle", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "KreisClient");
 		KeyBindingHelper.registerKeyBinding(zoomKey = new KeyBinding("Zoom",InputUtil.Type.KEYSYM,67,"KreisClient"));

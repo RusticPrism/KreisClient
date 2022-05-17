@@ -1,6 +1,8 @@
 package de.rusticprism.kreisclient.modapi;
 
 import de.rusticprism.kreisclient.config.Config;
+import de.rusticprism.kreisclient.utils.config.FileConfiguration;
+import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.GameRenderer;
@@ -12,11 +14,14 @@ public abstract class KreisClientMod extends Mod {
     public MinecraftClient client;
     public TextRenderer textRenderer;
     public GameRenderer gameRenderer;
+
+    private static FileConfiguration config;
    public void render(MatrixStack matrices,float Xpostion, float Yposition,int color) {
 
    }
    public KreisClientMod(String modname) {
        this.modname = modname;
+       config = new YamlConfiguration(modname + ".txt");
    }
 
     @Override
@@ -42,13 +47,13 @@ public abstract class KreisClientMod extends Mod {
         if(mousepressed) {
 
                 if(isEnabled()) {
-                    if(mouseX >= Double.parseDouble(Config.get(getModname() + ".txt","Xpos")) && mouseY >= Double.valueOf(Config.get(getModname() + ".txt","Ypos")) && mouseY<= Double.valueOf(Config.get(getModname() + ".txt","Ypos")) + 5&& mouseX<= Double.parseDouble(Config.get(getModname() + ".txt","Xpos")) + 30) {
+                    if(mouseX >= config.getDouble("Xpos") && mouseY >= config.getDouble("Ypos") && mouseY<= config.getDouble("Ypos") + 5&& mouseX<= config.getDouble("Xpos") + 30) {
                         canmove = true;
                     }
                 }
                 if(canmove) {
-                    Config.set(getModname() + ".txt","Xpos",String.valueOf(mouseX));
-                    Config.set(getModname() + ".txt","Ypos",String.valueOf(mouseY));
+                    config.set("Xpos", mouseX);
+                    config.set("Ypos", mouseY);
                 }
         }else canmove = false;
     }

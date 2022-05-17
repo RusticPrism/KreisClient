@@ -1,8 +1,9 @@
 package de.rusticprism.kreisclient.mods;
 
 import de.rusticprism.kreisclient.KreisClient;
-import de.rusticprism.kreisclient.config.Config;
 import de.rusticprism.kreisclient.modapi.KreisClientMod;
+import de.rusticprism.kreisclient.utils.config.FileConfiguration;
+import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
@@ -11,20 +12,22 @@ public class BlockCounter extends KreisClientMod {
     static MinecraftClient mc = KreisClient.MC;
     public static BlockCounter Instance;
     private static int blockamount;
+    private static FileConfiguration config;
 
     public BlockCounter() {
         super("BlockCounter");
         Instance = this;
+        config = new YamlConfiguration("Blockcounter.txt");
     }
 
     @Override
     public void setEnabled(boolean enabled) {
-        Config.set("Blockcounter.txt","Enabled", String.valueOf(enabled));
+        config.set("Enabled", enabled);
     }
 
     @Override
     public boolean isEnabled() {
-        return Boolean.parseBoolean(Config.get("Blockcounter.txt","Enabled"));
+        return config.getBoolean("Enabled");
     }
 
     public static String getamount() {
@@ -40,7 +43,7 @@ public class BlockCounter extends KreisClientMod {
 
     @Override
     public void render(MatrixStack matrices,float Xpostion, float Yposition,int color) {
-        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices,"§8Blocks §1" + getamount(),Float.valueOf(Config.get("BlockCounter.txt","Xpos")), Float.parseFloat(Config.get("Blockcounter.txt","Ypos")),color);
+        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices,"§8Blocks §1" + getamount(),config.getFloat("Xpos"), config.getFloat("Ypos "),color);
     }
 
     @Override
