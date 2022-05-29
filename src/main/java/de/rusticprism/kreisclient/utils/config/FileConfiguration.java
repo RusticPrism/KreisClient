@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public abstract class FileConfiguration {
 
     private final File file;
-    private final Map<String, Object> fileconfig;
+    private final Map<String, String> fileconfig;
     public FileConfiguration(File file) {
         File file1 = new File(FabricLoader.getInstance().getConfigDir() + "/KreisClient/" + file);
         if(!file1.exists()) {
@@ -45,9 +45,9 @@ public abstract class FileConfiguration {
     }
 
     public void set(String path, Object value) {
-        fileconfig.put(path,value);
+        fileconfig.put(path,String.valueOf(value));
         }
-    public Object get(@NotNull String path) {
+    public String get(@NotNull String path) {
         if(fileconfig.get(path) == null) {
             return null;
         }
@@ -66,15 +66,16 @@ public abstract class FileConfiguration {
         return String.valueOf(get(path));
     }
     public int getInt(@NotNull String path) {
-        return Integer.parseInt((String) get(path));
+        return Integer.parseInt(get(path));
     }
     public boolean getBoolean(@NotNull String path) {
-        return Boolean.parseBoolean((String) get(path));
+        return Boolean.parseBoolean(get(path));
     }
     public float getFloat(@NotNull String path) {
-        return Float.parseFloat((String) get(path));
+        System.out.println(get(path));
+        return Float.parseFloat(get(path));
     }
     public double getDouble(@NotNull String path) {
-        return Double.parseDouble((String) get(path));
+        return Double.parseDouble(get(path));
     }
 }

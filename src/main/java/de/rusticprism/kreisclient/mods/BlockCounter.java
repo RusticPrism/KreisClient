@@ -43,7 +43,7 @@ public class BlockCounter extends KreisClientMod {
 
     @Override
     public void render(MatrixStack matrices,float Xpostion, float Yposition,int color) {
-        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices,"§8Blocks §1" + getamount(),config.getFloat("Xpos"), config.getFloat("Ypos "),color);
+        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices,"§8Blocks §1" + getamount(),config.getFloat("Xpos"), config.getFloat("Ypos"),color);
     }
 
     @Override
