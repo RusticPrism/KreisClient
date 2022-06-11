@@ -6,11 +6,11 @@
   "mixins": [
   ],
   "client": [
+    "HitboxMixin",
     "MinecraftClientMixin",
     "OptionScreenMixin",
     "TitleScreenMixin",
     "accountmanager.MinecraftClientAccessor",
-    "borderlesswindow.FullScreenOptionMixin",
     "borderlesswindow.VideoModeFixMixin",
     "borderlesswindow.WindowMixin",
     "borderlesswindow.WindowSettingsMixin",
@@ -20,12 +20,11 @@
     "discord.MultiplayerScreenMixin",
     "discord.SinglePlayerMixin",
     "mods.ModsRendererMixin",
+    "mods.NarratorOffMixin",
     "perspective.CameraMixin",
     "perspective.MouseMixin",
     "zoom.PlayerInventoryMixin",
-    "zoom.ZoomMixin",
-    "HitboxMixin",
-    "mods.NarratorOffMixin"
+    "zoom.ZoomMixin"
   ],
   "injectors": {
     "defaultRequire": 1

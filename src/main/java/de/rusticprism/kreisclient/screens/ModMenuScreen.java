@@ -9,15 +9,14 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 public class ModMenuScreen extends Screen {
     public Screen previous;
     public boolean mousepressed = false;
     public ModMenuScreen(Screen prev) {
-        super(new LiteralText("ModMenu"));
+        super(Text.literal("ModMenu"));
         previous = prev;
     }
 
@@ -63,6 +62,6 @@ public class ModMenuScreen extends Screen {
         drawTexture(matrices, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
 
         super.render(matrices,mouseX,mouseY,delta);
-        this.addDrawableChild(new ButtonWidget(this.width - 98,0,98,20,new TranslatableText("kreisclient.gui.cancel"), onpress-> MinecraftClient.getInstance().currentScreen.close()));
+        this.addDrawableChild(new ButtonWidget(this.width - 98,0,98,20,Text.translatable("kreisclient.gui.cancel"), onpress-> MinecraftClient.getInstance().currentScreen.close()));
     }
 }

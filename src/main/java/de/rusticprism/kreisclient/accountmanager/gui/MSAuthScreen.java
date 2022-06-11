@@ -11,10 +11,8 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Util;
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.core.config.yaml.YamlConfiguration;
 import org.lwjgl.glfw.GLFW;
 
 import java.net.InetSocketAddress;
@@ -35,11 +33,11 @@ public class MSAuthScreen extends Screen {
 	public final Screen prev;
 	private HttpServer srv;
 	private int tick;
-	private Text state = new TranslatableText("kreisclient.auth.checkbrowser");
+	private Text state = Text.translatable("kreisclient.auth.checkbrowser");
 	private List<OrderedText> error;
 
 	public MSAuthScreen(Screen prev) {
-		super(new TranslatableText("kreisclient.auth.title"));
+		super(Text.translatable("kreisclient.auth.title"));
 		this.prev = prev;
 		new Thread(() -> {
 			try {
@@ -79,10 +77,10 @@ public class MSAuthScreen extends Screen {
 	
 	private void auth(String query) {
 		try {
-			state = new TranslatableText("kreisclient.auth.progress");
+			state = Text.translatable("kreisclient.auth.progress");
 			if (query == null) throw new NullPointerException("query=null");
 			if (query.equals("error=access_denied&error_description=The user has denied access to the scope requested by the client application."))
-				throw new AuthException(new TranslatableText("kreisclient.auth.error.revoked"));
+				throw new AuthException(Text.translatable("kreisclient.auth.error.revoked"));
 			if (!query.startsWith("code=")) throw new IllegalStateException("query=" + query);
 			Pair<String, String> authRefreshTokens = Auth.authCode2Token(query.replace("code=", ""));
 			String refreshToken = authRefreshTokens.getRight();
@@ -108,14 +106,14 @@ public class MSAuthScreen extends Screen {
 			if (t instanceof AuthException) {
 				error = textRenderer.wrapLines(((AuthException)t).getText(), width - 20);
 			} else {
-				error = textRenderer.wrapLines(new TranslatableText("kreisclient.auth.unknown", t.toString()), width - 20);
+				error = textRenderer.wrapLines(Text.translatable("kreisclient.auth.unknown", t.toString()), width - 20);
 			}
 		});
 	}
 
 	@Override
 	public void init() {
-		addDrawableChild(new ButtonWidget(this.width / 2 - 75, this.height - 28, 150, 20, new TranslatableText("kreisclient.gui.cancel"), btn -> client.setScreen(prev)));
+		addDrawableChild(new ButtonWidget(this.width / 2 - 75, this.height - 28, 150, 20, Text.translatable("kreisclient.gui.cancel"), btn -> client.setScreen(prev)));
 	}
 	
 	@Override

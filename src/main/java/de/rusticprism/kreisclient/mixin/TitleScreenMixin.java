@@ -14,7 +14,7 @@ import net.minecraft.client.gui.screen.option.OptionsScreen;
 import net.minecraft.client.gui.screen.world.SelectWorldScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
@@ -53,11 +53,11 @@ public abstract class TitleScreenMixin extends Screen {
 		MinecraftClient.getInstance().getWindow().setIcon(inputStream16,inputStream32);
 		int kreisclientTextWidth = this.textRenderer.getWidth("§1KreisClient by §8RusticPrism");
 		this.kreisclientTextX = this.width - kreisclientTextWidth - 2;
-		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, j + 72 + 12, 98, 20, new TranslatableText("menu.options"), (button) -> this.client.setScreen(new OptionsScreen(this, this.client.options))));
-		this.addDrawableChild(new ButtonWidget(this.width / 2 + 2, j + 72 + 12, 98, 20, new TranslatableText("menu.quit"), (button) -> this.client.scheduleStop()));
-		this.addDrawableChild(new ButtonWidget(this.width /2 -100, j + 48, 98,20 , new TranslatableText("kreisclient.settings"), (button) -> KreisClient.LOGGER.info("Settings")));
-		this.addDrawableChild(new ButtonWidget(this.width /2 + 2, j + 48, 98,20 , new TranslatableText("kreisclient.cosmetics"), (button) -> KreisClient.LOGGER.info("Cosmetics")));
-		this.addDrawableChild(new ButtonWidget(0,0,98,20,new TranslatableText("kreisclient.accountmanager"), (button -> MinecraftClient.getInstance().setScreen(new MSAuthScreen(this)))));
+		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, j + 72 + 12, 98, 20, Text.translatable("menu.options"), (button) -> this.client.setScreen(new OptionsScreen(this, this.client.options))));
+		this.addDrawableChild(new ButtonWidget(this.width / 2 + 2, j + 72 + 12, 98, 20, Text.translatable("menu.quit"), (button) -> this.client.scheduleStop()));
+		this.addDrawableChild(new ButtonWidget(this.width /2 -100, j + 48, 98,20 , Text.translatable("kreisclient.settings"), (button) -> KreisClient.LOGGER.info("Settings")));
+		this.addDrawableChild(new ButtonWidget(this.width /2 + 2, j + 48, 98,20 , Text.translatable("kreisclient.cosmetics"), (button) -> KreisClient.LOGGER.info("Cosmetics")));
+		this.addDrawableChild(new ButtonWidget(0,0,98,20,Text.translatable("kreisclient.accountmanager"), (button -> MinecraftClient.getInstance().setScreen(new MSAuthScreen(this)))));
 	}
 
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
@@ -83,9 +83,9 @@ public abstract class TitleScreenMixin extends Screen {
 	@Inject(method = "initWidgetsNormal",at= @At("HEAD"), cancellable = true)
 	public void CustomMultiSinglePlayerButtons(int y, int spacingY, CallbackInfo ci) {
 		ci.cancel();
-		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, y , 200, 20, new TranslatableText("menu.singleplayer"),
+		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, y , 200, 20, Text.translatable("menu.singleplayer"),
 				(button) -> this.client.setScreen(new SelectWorldScreen(this))));
-		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, y + spacingY, 200, 20, new TranslatableText("menu.multiplayer"), (button) -> {
+		this.addDrawableChild(new ButtonWidget(this.width / 2 - 100, y + spacingY, 200, 20, Text.translatable("menu.multiplayer"), (button) -> {
 			this.client.setScreen(new MultiplayerScreen(this));
 		}));
 	}

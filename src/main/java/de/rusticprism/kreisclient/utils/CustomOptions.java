@@ -1,45 +1,55 @@
 package de.rusticprism.kreisclient.utils;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.DoubleOption;
-import net.minecraft.text.LiteralText;
+import net.minecraft.client.option.GameOptions;
+import net.minecraft.client.option.SimpleOption;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-public class CustomOptions {
-    public static final DoubleOption FOV = new DoubleOption("kreisclient.options.fov", 1, 179, 1.0f, gameOptions -> gameOptions.fov, (gameOptions, fov) -> {
-        gameOptions.fov = fov;
-        MinecraftClient.getInstance().worldRenderer.scheduleTerrainUpdate();
-    }, (gameOptions, option) -> {
-        double d = option.get(gameOptions);
-        if (d == 70.0) {
-            return getGenericLabel(new TranslatableText("options.fov.min"));
-        }
-        if (d == 110) {
-            return getGenericLabel(new TranslatableText("options.fov.max"));
-        }
-        if(d == 179) {
-            return getGenericLabel(new LiteralText("180be"));
-        }
-        if(d == 1) {
-            return getGenericLabel(new LiteralText("JayJay"));
-        }
-        return getGenericLabel((int)d);
-    });
-    private static Text key = new TranslatableText("kreisclient.options.fov");
+import java.io.File;
 
-    public CustomOptions(String key) {
-        this.key = new TranslatableText(key);
+@Mixin(GameOptions.class)
+public abstract class CustomOptions {
+    @Mutable
+    @Shadow @Final private SimpleOption<Integer> fov;
+
+
+    @Shadow
+    public static Text getGenericValueText(Text prefix, int value) {
+        return null;
+    }
+    @Shadow
+    public static Text getGenericValueText(Text prefix,Text text) {
+        return null;
     }
 
-    protected static Text getGenericLabel(Text value) {
-        return new TranslatableText("options.generic_value", getDisplayPrefix(), value);
-    }
+    @Inject(method = "<init>",at = @At("RETURN"))
+    public void init(MinecraftClient client, File optionsFile, CallbackInfo ci) {
+        this.fov = new SimpleOption("options.fov", SimpleOption.emptyTooltip(), (optionText, value) -> {
+            Text var10000 = null;
+            if(value instanceof Integer) {
+                if((int) value == 1) {
+                    var10000 = getGenericValueText(optionText, Text.translatable("JayJay720"));
+                }else if((int) value == 179) {
+                    var10000 = getGenericValueText(optionText, Text.translatable("180be"));
+                }else var10000 = getGenericValueText(optionText, (Integer) value);
+            }
 
-    protected static Text getGenericLabel(int value) {
-        return getGenericLabel(new LiteralText(Integer.toString(value)));
-    }
-    protected static Text getDisplayPrefix() {
-        return key;
-    }
+            return var10000;
+        }, new SimpleOption.ValidatingIntSliderCallbacks(30, 110), Codec.DOUBLE.xmap((value) -> {
+            return (int)(value * 40.0 + 70.0);
+        }, (value) -> {
+            return ((double)value - 70.0) / 40.0;
+        }), 70, (value) -> {
+            MinecraftClient.getInstance().worldRenderer.scheduleTerrainUpdate();
+        });
+   }
 }

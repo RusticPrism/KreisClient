@@ -5,7 +5,7 @@ import de.rusticprism.kreisclient.utils.config.FileConfiguration;
 import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 
 public class TestMod extends KreisClientMod {
     private static FileConfiguration config;
@@ -31,6 +31,6 @@ public class TestMod extends KreisClientMod {
 
     @Override
     public void render(MatrixStack matrices, float Xpostion, float Yposition, int color) {
-        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices,new LiteralText("TestMod"),config.getFloat("Xpos"),config.getFloat("Ypos"),color);
+        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, Text.literal("TestMod"),config.getFloat("Xpos"),config.getFloat("Ypos"),color);
     }
 }

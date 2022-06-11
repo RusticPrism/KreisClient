@@ -75,7 +75,7 @@ public class Zoom {
 
             if(defaultMouseSensitivity != null)
             {
-                gameOptions.mouseSensitivity = defaultMouseSensitivity;
+                gameOptions.getMouseSensitivity().setValue(defaultMouseSensitivity);
                 defaultMouseSensitivity = null;
             }
 
@@ -83,13 +83,12 @@ public class Zoom {
         }
 
         if(defaultMouseSensitivity == null)
-            defaultMouseSensitivity = gameOptions.mouseSensitivity;
+            defaultMouseSensitivity = gameOptions.getMouseSensitivity().getValue();
 
         // Adjust mouse sensitivity in relation to zoom level.
         // (fov / currentLevel) / fov is a value between 0.02 (50x zoom)
         // and 1 (no zoom).
-        gameOptions.mouseSensitivity =
-                defaultMouseSensitivity * (fov / zoomLevel / fov);
+        gameOptions.getMouseSensitivity().setValue(defaultMouseSensitivity * (fov / zoomLevel / fov));
 
         return fov / zoomLevel;
     }

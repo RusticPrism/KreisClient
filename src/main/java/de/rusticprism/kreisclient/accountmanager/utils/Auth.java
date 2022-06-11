@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.mojang.util.UUIDTypeAdapter;
 import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.accountmanager.account.AuthException;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.IOException;
@@ -107,7 +107,7 @@ public class Auth {
         req.addProperty("RelyingParty", "rp://api.minecraftservices.com/");
         req.addProperty("TokenType", "JWT");
         pr.post(req.toString()); //Note: Here we're encoding parameters as JSON. ('key': 'value')
-        if (pr.response() == 401) throw new AuthException(new TranslatableText("kreisclient.auth.error.noxbox"));
+        if (pr.response() == 401) throw new AuthException(Text.translatable("kreisclient.auth.error.noxbox"));
         if (pr.response() < 200 || pr.response() >= 300) throw new IllegalArgumentException("authXSTS response: " + pr.response());
         JsonObject resp = KreisClient.GSON.fromJson(pr.body(), JsonObject.class);
         return Pair.of(resp.get("Token").getAsString(), resp.getAsJsonObject("DisplayClaims")
@@ -147,7 +147,7 @@ public class Auth {
 		pr.header("Authorization", "Bearer " + accessToken);
 		pr.get(); //Note: Here we're using GET, not POST.
 		if (pr.response() < 200 || pr.response() >= 300) throw new IllegalArgumentException("checkGameOwnership response: " + pr.response());
-        if (KreisClient.GSON.fromJson(pr.body(), JsonObject.class).getAsJsonArray("items").size() == 0) throw new AuthException(new TranslatableText("ias.msauth.error.gamenotowned"));
+        if (KreisClient.GSON.fromJson(pr.body(), JsonObject.class).getAsJsonArray("items").size() == 0) throw new AuthException(Text.translatable("ias.msauth.error.gamenotowned"));
     }
     
     /**

@@ -3,8 +3,6 @@ package de.rusticprism.kreisclient.commands;
 import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.utils.KreisClientCommand;
 import de.rusticprism.kreisclient.utils.Prefix;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.LiteralText;
 
 public class PrefixCommand extends KreisClientCommand {
     @Override

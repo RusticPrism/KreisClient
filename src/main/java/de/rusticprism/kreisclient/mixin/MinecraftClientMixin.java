@@ -13,7 +13,7 @@ public class MinecraftClientMixin {
     @Inject(method = "updateWindowTitle",at = @At("HEAD"),cancellable = true)
     public void setWindowTitle(CallbackInfo ci) {
         MinecraftClient.getInstance().getWindow().setTitle("KreisClient " + KreisClient.version + "  Minecraft: 1.18.2");
-        MinecraftClient.getInstance().options.narrator = NarratorMode.OFF;
+        MinecraftClient.getInstance().options.getNarrator().setValue(NarratorMode.OFF);
         ci.cancel();
     }
 }
