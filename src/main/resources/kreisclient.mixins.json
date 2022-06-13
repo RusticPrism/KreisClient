@@ -8,7 +8,6 @@
   "client": [
     "HitboxMixin",
     "MinecraftClientMixin",
-    "OptionScreenMixin",
     "TitleScreenMixin",
     "accountmanager.MinecraftClientAccessor",
     "borderlesswindow.VideoModeFixMixin",
@@ -16,13 +15,13 @@
     "borderlesswindow.WindowSettingsMixin",
     "commands.ChatMixin",
     "commands.ClientConnectionMixin",
+    "perspective.CameraMixin",
+    "perspective.MouseMixin",
     "discord.ConnectMixin",
     "discord.MultiplayerScreenMixin",
     "discord.SinglePlayerMixin",
     "mods.ModsRendererMixin",
     "mods.NarratorOffMixin",
-    "perspective.CameraMixin",
-    "perspective.MouseMixin",
     "zoom.PlayerInventoryMixin",
     "zoom.ZoomMixin"
   ],

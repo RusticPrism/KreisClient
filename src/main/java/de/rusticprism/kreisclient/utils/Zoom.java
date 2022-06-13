@@ -11,6 +11,7 @@ public class Zoom {
     private static Double defaultMouseSensitivity;
 
     public static Double zoomLevel;
+
     public static void manageSmoothCamera() {
         if (zoomStarting()) {
             zoomStarted();
@@ -22,6 +23,7 @@ public class Zoom {
             resetSmoothCamera();
         }
     }
+
     public static boolean isZooming() {
         return KreisClient.zoomKey.isPressed();
     }
@@ -62,19 +64,17 @@ public class Zoom {
             disableSmoothCamera();
         }
     }
-    public static double changeFovBasedOnZoom(double fov)
-    {
+
+    public static double changeFovBasedOnZoom(double fov) {
         GameOptions gameOptions = KreisClient.MC.options;
 
-        if(zoomLevel == null)
+        if (zoomLevel == null)
             zoomLevel = defaultLevel;
 
-        if(!isZooming())
-        {
+        if (!isZooming()) {
             zoomLevel = defaultLevel;
 
-            if(defaultMouseSensitivity != null)
-            {
+            if (defaultMouseSensitivity != null) {
                 gameOptions.getMouseSensitivity().setValue(defaultMouseSensitivity);
                 defaultMouseSensitivity = null;
             }
@@ -82,7 +82,7 @@ public class Zoom {
             return fov;
         }
 
-        if(defaultMouseSensitivity == null)
+        if (defaultMouseSensitivity == null)
             defaultMouseSensitivity = gameOptions.getMouseSensitivity().getValue();
 
         // Adjust mouse sensitivity in relation to zoom level.
@@ -93,17 +93,16 @@ public class Zoom {
         return fov / zoomLevel;
     }
 
-    public static void onMouseScroll(double amount)
-    {
-        if(!isZooming())
+    public static void onMouseScroll(double amount) {
+        if (!isZooming())
             return;
 
-        if(zoomLevel == null)
+        if (zoomLevel == null)
             zoomLevel = defaultLevel;
 
-        if(amount > 0)
+        if (amount > 0)
             zoomLevel *= 1.1;
-        else if(amount < 0)
+        else if (amount < 0)
             zoomLevel *= 0.9;
 
         zoomLevel = MathHelper.clamp(zoomLevel, 1, 50);
