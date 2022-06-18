@@ -17,22 +17,23 @@ public abstract class FileConfiguration {
 
     private final File file;
     private final Map<String, String> fileconfig;
-    public FileConfiguration(File file) {
+    public FileConfiguration(String file) {
         File file1 = new File(FabricLoader.getInstance().getConfigDir() + "/KreisClient/" + file);
         if(!file1.exists()) {
             try {
                 file1.createNewFile();
             } catch (IOException e) {
                 KreisClient.LOGGER.warn("Couldn't create " + file + " because of " + e.getCause() + "!");
+                e.printStackTrace();
             }
         }
 
-        this.file = file;
+        this.file = file1;
         this.fileconfig = new HashMap<>();
 
         //Set Map
         StringBuilder builder = new StringBuilder();
-        try (Stream<String> stream = Files.lines(Path.of(file.getPath()))) {
+        try (Stream<String> stream = Files.lines(Path.of(file1.getPath()))) {
             stream.forEach(s -> builder.append(s).append(" "));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -72,10 +73,13 @@ public abstract class FileConfiguration {
         return Boolean.parseBoolean(get(path));
     }
     public float getFloat(@NotNull String path) {
-        System.out.println(get(path));
         return Float.parseFloat(get(path));
     }
     public double getDouble(@NotNull String path) {
         return Double.parseDouble(get(path));
+    }
+
+    public Path getConfigPath() {
+        return file.toPath();
     }
 }

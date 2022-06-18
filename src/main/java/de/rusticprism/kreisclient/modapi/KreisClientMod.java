@@ -1,6 +1,5 @@
 package de.rusticprism.kreisclient.modapi;
 
-import de.rusticprism.kreisclient.config.Config;
 import de.rusticprism.kreisclient.utils.config.FileConfiguration;
 import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.minecraft.client.MinecraftClient;

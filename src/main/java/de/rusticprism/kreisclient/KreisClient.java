@@ -1,14 +1,12 @@
 package de.rusticprism.kreisclient;
 
 import com.google.gson.Gson;
-import de.rusticprism.kreisclient.config.Config;
+import de.rusticprism.kreisclient.config.BorderlessFullscreenConfig;
 import de.rusticprism.kreisclient.discord.Discord;
 import de.rusticprism.kreisclient.keys.Perspectivekey;
 import de.rusticprism.kreisclient.modapi.ModMenu;
 import de.rusticprism.kreisclient.modapi.ModRegistery;
 import de.rusticprism.kreisclient.utils.CommandManager;
-import de.rusticprism.kreisclient.utils.config.FileConfiguration;
-import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -19,10 +17,6 @@ import net.minecraft.client.util.InputUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.system.CallbackI;
-
-import java.io.File;
-import java.io.IOException;
 
 public class KreisClient implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -67,8 +61,5 @@ public class KreisClient implements ModInitializer {
 			ModMenu.call(openmodmenu, e.currentScreen);
 		});
 
-
-		//Loading Config...
-		Config.loadAll();
 	}
 }

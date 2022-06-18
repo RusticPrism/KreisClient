@@ -13,6 +13,7 @@
     "borderlesswindow.VideoModeFixMixin",
     "borderlesswindow.WindowMixin",
     "borderlesswindow.WindowSettingsMixin",
+    "borderlesswindow.FullScreenOptionMixin",
     "commands.ChatMixin",
     "commands.ClientConnectionMixin",
     "discord.ConnectMixin",

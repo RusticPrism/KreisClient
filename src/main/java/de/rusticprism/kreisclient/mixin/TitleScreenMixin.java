@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.accountmanager.gui.MSAuthScreen;
 import de.rusticprism.kreisclient.buttons.ButtonWidget;
+import de.rusticprism.kreisclient.config.OtherUtil;
 import de.rusticprism.kreisclient.discord.Discord;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -48,8 +49,8 @@ public abstract class TitleScreenMixin extends Screen {
 		int j = this.height / 4 + 48;
 		Discord.update("Idle","MainMenu");
 			this.initWidgetsNormal(j, 24);
-		InputStream inputStream16 = de.rusticprism.kreisclient.config.Config.getResource("assets/kreisclient/icons/icon_16x16.png");
-		InputStream inputStream32 = de.rusticprism.kreisclient.config.Config.getResource("assets/kreisclient/icons/icon_32x32.png");
+		InputStream inputStream16 = OtherUtil.getResource("assets/kreisclient/icons/icon_16x16.png");
+		InputStream inputStream32 = OtherUtil.getResource("assets/kreisclient/icons/icon_32x32.png");
 		MinecraftClient.getInstance().getWindow().setIcon(inputStream16,inputStream32);
 		int kreisclientTextWidth = this.textRenderer.getWidth("§1KreisClient by §8RusticPrism");
 		this.kreisclientTextX = this.width - kreisclientTextWidth - 2;

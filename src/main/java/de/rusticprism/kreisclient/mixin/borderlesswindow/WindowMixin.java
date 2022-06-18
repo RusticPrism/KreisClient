@@ -3,7 +3,6 @@ package de.rusticprism.kreisclient.mixin.borderlesswindow;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.config.BorderlessFullscreenConfig;
-import de.rusticprism.kreisclient.utils.SettingBorderlessFullscreen;
 import de.rusticprism.kreisclient.utils.WindowHooks;
 import de.rusticprism.kreisclient.utils.WindowResolutionChangeWrapper;
 import net.minecraft.client.MinecraftClient;
@@ -73,6 +72,7 @@ public abstract class WindowMixin implements WindowHooks {
      */
     @SuppressWarnings("UnusedReturnValue")
     private boolean borderlessmining_setBorderlessFullscreen(boolean newValue) {
+        System.out.println(newValue);
         RenderSystem.assertOnRenderThreadOrInit();
         if (borderlessFullscreen != newValue) {
             borderlessFullscreen = newValue;
@@ -182,10 +182,10 @@ public abstract class WindowMixin implements WindowHooks {
     private void onConstruction(WindowEventHandler eventHandler, MonitorTracker monitorTracker, WindowSettings settings, String videoMode, String title, CallbackInfo ci) {
             // Stop onResolutionChanged from being triggered if borderless is being set in the constructor
             WindowResolutionChangeWrapper eventHandlerWrapper = new WindowResolutionChangeWrapper(eventHandler);
+            borderlessmining_setBorderlessFullscreen(false);
             this.eventHandler = eventHandlerWrapper;
-            if (((SettingBorderlessFullscreen) settings).isBorderlessFullscreen()) {
+            if (BorderlessFullscreenConfig.getInstance().isEnabled()) {
                 eventHandlerWrapper.setEnabled(false);
-                borderlessmining_setBorderlessFullscreen(true);
                 // Don't do anything if it fails!
                 eventHandlerWrapper.setEnabled(true);
             }
@@ -195,9 +195,11 @@ public abstract class WindowMixin implements WindowHooks {
 
     @Inject(method = "toggleFullscreen", at = @At("HEAD"), cancellable = true)
     public void onToggleFullscreen(CallbackInfo info) {
+        if(BorderlessFullscreenConfig.getInstance().isEnabled()) {
             fullscreen = false;
             info.cancel();
             borderlessmining_setBorderlessFullscreen(!borderlessFullscreen);
+        }
     }
 
     @Inject(method = "isFullscreen", at = @At("RETURN"), cancellable = true)

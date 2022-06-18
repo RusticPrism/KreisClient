@@ -7,6 +7,6 @@ import java.io.File;
 public class YamlConfiguration extends FileConfiguration{
 
     public YamlConfiguration(String file) {
-        super(new File(FabricLoader.getInstance().getConfigDir() + "/KreisClient/" + file));
+        super(file);
     }
 }

@@ -5,14 +5,19 @@ import de.rusticprism.kreisclient.modapi.KreisClientMod;
 import de.rusticprism.kreisclient.utils.config.FileConfiguration;
 import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.tooltip.OrderedTextTooltipComponent;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+
+import java.awt.*;
 
 public class BlockCounter extends KreisClientMod {
     static MinecraftClient mc = KreisClient.MC;
     public static BlockCounter Instance;
     private static int blockamount;
-    private static FileConfiguration config;
+   public FileConfiguration config;
 
     public BlockCounter() {
         super("BlockCounter");
