@@ -182,10 +182,10 @@ public abstract class WindowMixin implements WindowHooks {
     private void onConstruction(WindowEventHandler eventHandler, MonitorTracker monitorTracker, WindowSettings settings, String videoMode, String title, CallbackInfo ci) {
             // Stop onResolutionChanged from being triggered if borderless is being set in the constructor
             WindowResolutionChangeWrapper eventHandlerWrapper = new WindowResolutionChangeWrapper(eventHandler);
-            borderlessmining_setBorderlessFullscreen(false);
             this.eventHandler = eventHandlerWrapper;
             if (BorderlessFullscreenConfig.getInstance().isEnabled()) {
                 eventHandlerWrapper.setEnabled(false);
+                borderlessmining_setBorderlessFullscreen(true);
                 // Don't do anything if it fails!
                 eventHandlerWrapper.setEnabled(true);
             }
@@ -195,7 +195,9 @@ public abstract class WindowMixin implements WindowHooks {
 
     @Inject(method = "toggleFullscreen", at = @At("HEAD"), cancellable = true)
     public void onToggleFullscreen(CallbackInfo info) {
+        System.out.println("Test1 ");
         if(BorderlessFullscreenConfig.getInstance().isEnabled()) {
+            System.out.println("Test");
             fullscreen = false;
             info.cancel();
             borderlessmining_setBorderlessFullscreen(!borderlessFullscreen);
@@ -218,7 +220,7 @@ public abstract class WindowMixin implements WindowHooks {
      * @param destEnabledState The desired destination enabling state - if this is true the previous enable state was false, etc.
      * @param destFullscreenState The desired destination fullscreen state, after applying this change
      */
-    public void borderlessmining_updateEnabledState(boolean destEnabledState, boolean currentFullscreenState, boolean destFullscreenState) {
+    public void borderlessfullscreen_updateEnabledState(boolean destEnabledState, boolean currentFullscreenState, boolean destFullscreenState) {
         // Update enabled state, applying changes if they need to be done
         if (destEnabledState) {
             // Disabled -> Enabled

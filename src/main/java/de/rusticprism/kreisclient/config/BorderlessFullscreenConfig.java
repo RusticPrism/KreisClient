@@ -4,19 +4,23 @@ import de.rusticprism.kreisclient.utils.WindowHooks;
 import de.rusticprism.kreisclient.utils.config.FileConfiguration;
 import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.minecraft.client.MinecraftClient;
-import org.spongepowered.asm.mixin.injection.Inject;
 
 public class BorderlessFullscreenConfig {
     private static final FileConfiguration configFile = new YamlConfiguration("borderlessfullscreen.txt");
 
     private BorderlessFullscreenConfig(boolean enabled,boolean vanillasetting) {
-        this.enableBorderlessFullscreen = enabled;
+       this.enableBorderlessFullscreen = enabled;
         this.addToVanillaVideoSettings = vanillasetting;
     }
 
-    private static final BorderlessFullscreenConfig INSTANCE = new BorderlessFullscreenConfig(false,configFile.getBoolean("VanillaSetting"));
+    private static BorderlessFullscreenConfig INSTANCE = null;
 
     public static BorderlessFullscreenConfig getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new BorderlessFullscreenConfig(configFile.getBoolean("Enabled"),configFile.getBoolean("VanillaSetting"));
+            INSTANCE.save(false);
+        }
+        System.out.println(INSTANCE.enableBorderlessFullscreen);
         INSTANCE.enabledPending = INSTANCE.enableBorderlessFullscreen;
         return INSTANCE;
     }
@@ -120,12 +124,9 @@ public class BorderlessFullscreenConfig {
             boolean currentState = window.borderlessfullscreen_getFullscreenState();
 
             // This must be done before changing window mode/pos/size as changing those restarts FullScreenOptionMixin
-            enableBorderlessFullscreen = enabledPending;
             enabledDirty = false;
 
             window.borderlessfullscreen_updateEnabledState(isEnabled(), currentState, destFullscreenState);
         }
-        configFile.set("Enabled", enableBorderlessFullscreen);
-        configFile.set("VanillaSetting", addToVanillaVideoSettings);
     }
 }
