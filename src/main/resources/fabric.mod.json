@@ -9,7 +9,7 @@
     "RusticPrism"
   ],
   "contact": {
-    "homepage": "kreiscraft.de (coming soon)",
+    "homepage": "client.kreiscraft.de",
     "sources": "https://github.com/RusticPrism/KreisClient"
   },
 
@@ -29,7 +29,7 @@
   "depends": {
     "fabricloader": ">=0.14.6",
     "fabric": "*",
-    "minecraft": "~1.19",
+    "minecraft": ">=1.19",
     "java": ">=17"
   },
   "suggests": {

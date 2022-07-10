@@ -26,7 +26,8 @@
     "zoom.PlayerInventoryMixin",
     "zoom.ZoomMixin",
     "renderer.dynamicfps.GameRendererMixin",
-    "renderer.dynamicfps.ThreadExecutorMixin"
+    "renderer.dynamicfps.ThreadExecutorMixin",
+    "SimpleOptionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

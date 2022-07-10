@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -43,11 +43,10 @@ public abstract class MinecraftClientMixin extends ReentrantThreadExecutor<Runna
         super(string);
     }
 
-    @Inject(method = "updateWindowTitle",at = @At("HEAD"),cancellable = true)
-    public void setWindowTitle(CallbackInfo ci) {
-        ci.cancel();
-        MinecraftClient.getInstance().getWindow().setTitle("KreisClient " + KreisClient.version + "  Minecraft: 1.18.2");
+    @Inject(method = "getWindowTitle",at = @At(value = "HEAD"), cancellable = true)
+    private void getWindowTitle(CallbackInfoReturnable<String> cir) {
         MinecraftClient.getInstance().options.getNarrator().setValue(NarratorMode.OFF);
+        cir.setReturnValue("KreisClient " + KreisClient.version + " - Minecraft " + MinecraftClient.getInstance().getGame().getVersion().getId());
     }
     @ModifyArg(method = "<init>",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/MinecraftClient;setOverlay(Lnet/minecraft/client/gui/screen/Overlay;)V"),index = 0)
     private Overlay setOverlay(Overlay overlay) {

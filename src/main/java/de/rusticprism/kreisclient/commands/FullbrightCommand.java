@@ -11,7 +11,7 @@ public class FullbrightCommand extends KreisClientCommand {
         if(args.length == 0) {
             if(!enabled || MinecraftClient.getInstance().options.getGamma().getValue() <= 1.0) {
                 enabled = true;
-               MinecraftClient.getInstance().options.getGamma().setValue(50.0);
+               MinecraftClient.getInstance().options.getGamma().setValue(500.0);
                 info("Fullbright ist nun an!");
             }else {
                 MinecraftClient.getInstance().options.getGamma().setValue(1.0);
