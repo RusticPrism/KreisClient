@@ -25,19 +25,19 @@ public class Zoom {
     }
 
     public static boolean isZooming() {
-        return KreisClient.zoomKey.isPressed();
+        return KreisClient.INSTANCE.zoomKey.isPressed();
     }
 
     private static boolean isSmoothCamera() {
-        return KreisClient.MC.options.smoothCameraEnabled;
+        return KreisClient.INSTANCE.MC.options.smoothCameraEnabled;
     }
 
     private static void enableSmoothCamera() {
-        KreisClient.MC.options.smoothCameraEnabled = true;
+        KreisClient.INSTANCE.MC.options.smoothCameraEnabled = true;
     }
 
     private static void disableSmoothCamera() {
-        KreisClient.MC.options.smoothCameraEnabled = false;
+        KreisClient.INSTANCE.MC.options.smoothCameraEnabled = false;
     }
 
     private static boolean zoomStarting() {
@@ -66,7 +66,7 @@ public class Zoom {
     }
 
     public static double changeFovBasedOnZoom(double fov) {
-        GameOptions gameOptions = KreisClient.MC.options;
+        GameOptions gameOptions = KreisClient.INSTANCE.MC.options;
 
         if (zoomLevel == null)
             zoomLevel = defaultLevel;

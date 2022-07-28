@@ -20,10 +20,7 @@ dependencies {
 
 
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	//modImplementation 'org.json:json:20220320'
+	modCompileOnly fabricApi.module("fabric-renderer-indigo", project.api_version)
 
 	implementation fileTree('libs') { include '*.jar' }
 }

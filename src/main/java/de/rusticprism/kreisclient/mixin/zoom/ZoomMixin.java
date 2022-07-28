@@ -49,14 +49,4 @@ public abstract class ZoomMixin implements AutoCloseable, SynchronousResourceRel
             cir.setReturnValue(Zoom.changeFovBasedOnZoom(d));
         }
     }
-
-    @Shadow
-    @Override
-    public void reload(ResourceManager manager) {
-    }
-    @Shadow
-    @Override
-    public void close() {
-
-    }
 }

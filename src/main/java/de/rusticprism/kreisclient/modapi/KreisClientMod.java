@@ -1,7 +1,7 @@
 package de.rusticprism.kreisclient.modapi;
 
+import de.rusticprism.kreisclient.utils.config.Configuration;
 import de.rusticprism.kreisclient.utils.config.FileConfiguration;
-import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.GameRenderer;
@@ -20,7 +20,7 @@ public abstract class KreisClientMod extends Mod {
    }
    public KreisClientMod(String modname) {
        this.modname = modname;
-       config = new YamlConfiguration(modname + ".txt");
+       config = new Configuration(modname + ".txt");
    }
 
     @Override

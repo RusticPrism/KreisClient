@@ -2,7 +2,7 @@ package de.rusticprism.kreisclient.mods;
 
 import de.rusticprism.kreisclient.modapi.KreisClientMod;
 import de.rusticprism.kreisclient.utils.config.FileConfiguration;
-import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
+import de.rusticprism.kreisclient.utils.config.Configuration;
 
 public class NarratorOffMod extends KreisClientMod{
     public static NarratorOffMod instance;
@@ -10,7 +10,7 @@ public class NarratorOffMod extends KreisClientMod{
     public NarratorOffMod() {
         super("Narratoroff");
         instance = this;
-        config = new YamlConfiguration("Narratoroff.txt");
+        config = new Configuration("Narratoroff.txt");
     }
 
     //@Override

@@ -15,6 +15,6 @@ public final class ThreadExecutorMixin {
     @Overwrite
     public void waitForTasks() {
         // yield() here is a terrible idea
-        LockSupport.parkNanos("waiting for tasks", 500_000); // increased wait to 0.5 ms
+        LockSupport.parkNanos("waiting for tasks", 500000L); // increased wait to 0.5 ms
     }
 }

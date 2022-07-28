@@ -1,6 +1,7 @@
 package de.rusticprism.kreisclient.mixin;
 
 import de.rusticprism.kreisclient.KreisClient;
+import de.rusticprism.kreisclient.keys.Perspectivekey;
 import de.rusticprism.kreisclient.render.SplashOverlay;
 import net.minecraft.SharedConstants;
 import net.minecraft.client.MinecraftClient;
@@ -19,6 +20,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
@@ -69,5 +71,9 @@ public abstract class MinecraftClientMixin extends ReentrantThreadExecutor<Runna
 
             this.resourceReloadLogger.finish();
         }), false);
+    }
+    @Inject(method = "tick", at = @At("HEAD"))
+    public void ontick(CallbackInfo ci) {
+        Perspectivekey.call(KreisClient.INSTANCE.perspectiveKey);
     }
 }

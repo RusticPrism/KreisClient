@@ -2,11 +2,11 @@ package de.rusticprism.kreisclient.config;
 
 import de.rusticprism.kreisclient.utils.WindowHooks;
 import de.rusticprism.kreisclient.utils.config.FileConfiguration;
-import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
+import de.rusticprism.kreisclient.utils.config.Configuration;
 import net.minecraft.client.MinecraftClient;
 
 public class BorderlessFullscreenConfig {
-    private static final FileConfiguration configFile = new YamlConfiguration("borderlessfullscreen.txt");
+    private static final FileConfiguration configFile = new Configuration("borderlessfullscreen.txt");
 
     private BorderlessFullscreenConfig(boolean enabled,boolean vanillasetting) {
        this.enableBorderlessFullscreen = enabled;

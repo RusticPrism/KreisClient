@@ -1,17 +1,10 @@
 package de.rusticprism.kreisclient.mixin.renderer.dynamicfps;
 
-import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import de.rusticprism.kreisclient.KreisClient;
+import de.rusticprism.kreisclient.render.SplashOverlay;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.Camera;
+import net.minecraft.client.gui.screen.Overlay;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.sound.SoundInstance;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -31,12 +24,22 @@ public abstract class GameRendererMixin {
             MinecraftClient.getInstance().getWindow().setFramerateLimit(MinecraftClient.getInstance().options.getMaxFps().getValue());
             wasfokused = true;
         }else if(!MinecraftClient.getInstance().isWindowFocused()) {
-            MinecraftClient.getInstance().getWindow().setFramerateLimit(1);
+            MinecraftClient.getInstance().getWindow().setFramerateLimit(30);
             ci.cancel();
             wasfokused = false;
         }else if(!wasfokused){
             MinecraftClient.getInstance().getWindow().setFramerateLimit(MinecraftClient.getInstance().options.getMaxFps().getValue());
             wasfokused = true;
+        }
+    }
+    @Inject(at = @At("HEAD"), method = "renderWorld", cancellable = true)
+    private void onRenderWorld(CallbackInfo callbackInfo) {
+        Overlay overlay = MinecraftClient.getInstance().getOverlay();
+        if (overlay instanceof SplashOverlay) {
+            SplashOverlay splashScreen = (SplashOverlay) overlay;
+            if (splashScreen.isReloading()) {
+                callbackInfo.cancel();
+            }
         }
     }
 }

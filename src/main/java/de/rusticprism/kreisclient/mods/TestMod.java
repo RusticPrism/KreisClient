@@ -1,8 +1,8 @@
 package de.rusticprism.kreisclient.mods;
 
 import de.rusticprism.kreisclient.modapi.KreisClientMod;
+import de.rusticprism.kreisclient.utils.config.Configuration;
 import de.rusticprism.kreisclient.utils.config.FileConfiguration;
-import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -11,7 +11,7 @@ public class TestMod extends KreisClientMod {
     private static FileConfiguration config;
     public TestMod() {
         super("TestMod");
-        config = new YamlConfiguration("TestMod.txt");
+        config = new Configuration("TestMod.txt");
     }
 
     @Override

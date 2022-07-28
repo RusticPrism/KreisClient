@@ -33,7 +33,7 @@ public class Auth {
         req.put("scope", "XboxLive.signin XboxLive.offline_access");
         pr.post(req); //Note: Here we're encoding parameters as HTTP. (key=value)
         if (pr.response() < 200 || pr.response() >= 300) throw new IllegalArgumentException("authCode2Token response: " + pr.response());
-        JsonObject resp = KreisClient.GSON.fromJson(pr.body(), JsonObject.class);
+        JsonObject resp = KreisClient.INSTANCE.GSON.fromJson(pr.body(), JsonObject.class);
         return Pair.of(resp.get("access_token").getAsString(), resp.get("refresh_token").getAsString());
     }
     
@@ -55,7 +55,7 @@ public class Auth {
 		req.put("redirect_uri", "http://localhost:59125");
 		r.post(req); //Note: Here we're encoding parameters as HTTP. (key=value)
 		if (r.response() < 200 || r.response() >= 300) throw new IllegalArgumentException("refreshToken response: " + r.response());
-		JsonObject resp = KreisClient.GSON.fromJson(r.body(), JsonObject.class);
+		JsonObject resp = KreisClient.INSTANCE.GSON.fromJson(r.body(), JsonObject.class);
 		return Pair.of(resp.get("access_token").getAsString(), resp.get("refresh_token").getAsString());
     }
     
@@ -81,7 +81,7 @@ public class Auth {
 		req.addProperty("TokenType", "JWT");
         pr.post(req.toString()); //Note: Here we're encoding parameters as JSON. ('key': 'value')
         if (pr.response() < 200 || pr.response() >= 300) throw new IllegalArgumentException("authXBL response: " + pr.response());
-        return KreisClient.GSON.fromJson(pr.body(), JsonObject.class).get("Token").getAsString();
+        return KreisClient.INSTANCE.GSON.fromJson(pr.body(), JsonObject.class).get("Token").getAsString();
     }
     
     /**
@@ -109,7 +109,7 @@ public class Auth {
         pr.post(req.toString()); //Note: Here we're encoding parameters as JSON. ('key': 'value')
         if (pr.response() == 401) throw new AuthException(Text.translatable("kreisclient.auth.error.noxbox"));
         if (pr.response() < 200 || pr.response() >= 300) throw new IllegalArgumentException("authXSTS response: " + pr.response());
-        JsonObject resp = KreisClient.GSON.fromJson(pr.body(), JsonObject.class);
+        JsonObject resp = KreisClient.INSTANCE.GSON.fromJson(pr.body(), JsonObject.class);
         return Pair.of(resp.get("Token").getAsString(), resp.getAsJsonObject("DisplayClaims")
         		.getAsJsonArray("xui").get(0).getAsJsonObject().get("uhs").getAsString());
     }
@@ -131,7 +131,7 @@ public class Auth {
         req.addProperty("identityToken", "XBL3.0 x=" + userHash + ";" + xstsToken);
         pr.post(req.toString()); //Note: Here we're encoding parameters as JSON. ('key': 'value')
         if (pr.response() < 200 || pr.response() >= 300) throw new IllegalArgumentException("authMinecraft response: " + pr.response());
-        return KreisClient.GSON.fromJson(pr.body(), JsonObject.class).get("access_token").getAsString();
+        return KreisClient.INSTANCE.GSON.fromJson(pr.body(), JsonObject.class).get("access_token").getAsString();
     }
     
     /**
@@ -147,7 +147,7 @@ public class Auth {
 		pr.header("Authorization", "Bearer " + accessToken);
 		pr.get(); //Note: Here we're using GET, not POST.
 		if (pr.response() < 200 || pr.response() >= 300) throw new IllegalArgumentException("checkGameOwnership response: " + pr.response());
-        if (KreisClient.GSON.fromJson(pr.body(), JsonObject.class).getAsJsonArray("items").size() == 0) throw new AuthException(Text.translatable("ias.msauth.error.gamenotowned"));
+        if (KreisClient.INSTANCE.GSON.fromJson(pr.body(), JsonObject.class).getAsJsonArray("items").size() == 0) throw new AuthException(Text.translatable("ias.msauth.error.gamenotowned"));
     }
     
     /**
@@ -163,7 +163,7 @@ public class Auth {
 		pr.header("Authorization", "Bearer " + accessToken);
 		pr.get(); //Note: Here we're using GET, not POST.
         if (pr.response() < 200 || pr.response() >= 300) throw new IllegalArgumentException("getProfile response: " + pr.response());
-        JsonObject resp = KreisClient.GSON.fromJson(pr.body(), JsonObject.class);
+        JsonObject resp = KreisClient.INSTANCE.GSON.fromJson(pr.body(), JsonObject.class);
         return Pair.of(UUIDTypeAdapter.fromString(resp.get("id").getAsString()), resp.get("name").getAsString());
     }
     

@@ -48,6 +48,10 @@ public class SplashOverlay extends Overlay{
         this.reloading = reloading;
     }
 
+    public boolean isReloading() {
+        return reloading;
+    }
+
     public static void init(MinecraftClient client) {
         client.getTextureManager().registerTexture(LOGO, new SplashOverlay.LogoTexture());
     }

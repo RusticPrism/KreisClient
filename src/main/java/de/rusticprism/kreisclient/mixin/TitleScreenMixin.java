@@ -3,7 +3,7 @@ package de.rusticprism.kreisclient.mixin;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.rusticprism.kreisclient.KreisClient;
-import de.rusticprism.kreisclient.accountmanager.gui.MSAuthScreen;
+import de.rusticprism.kreisclient.accountmanager.gui.AccountScreen;
 import de.rusticprism.kreisclient.buttons.ButtonWidget;
 import de.rusticprism.kreisclient.config.OtherUtil;
 import de.rusticprism.kreisclient.discord.Discord;
@@ -58,7 +58,7 @@ public abstract class TitleScreenMixin extends Screen {
 		this.addDrawableChild(new ButtonWidget(this.width / 2 + 2, j + 72 + 12, 98, 20, Text.translatable("menu.quit"), (button) -> this.client.scheduleStop()));
 		this.addDrawableChild(new ButtonWidget(this.width /2 -100, j + 48, 98,20 , Text.translatable("kreisclient.settings"), (button) -> KreisClient.LOGGER.info("Settings")));
 		this.addDrawableChild(new ButtonWidget(this.width /2 + 2, j + 48, 98,20 , Text.translatable("kreisclient.cosmetics"), (button) -> KreisClient.LOGGER.info("Cosmetics")));
-		this.addDrawableChild(new ButtonWidget(0,0,98,20,Text.translatable("kreisclient.accountmanager"), (button -> MinecraftClient.getInstance().setScreen(new MSAuthScreen(this)))));
+		this.addDrawableChild(new ButtonWidget(0,0,98,20,Text.translatable("kreisclient.accountmanager"), (button -> MinecraftClient.getInstance().setScreen(new AccountScreen(this)))));
 	}
 
 	@Inject(method = "render", at = @At("HEAD"), cancellable = true)

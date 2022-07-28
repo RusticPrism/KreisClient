@@ -2,19 +2,14 @@ package de.rusticprism.kreisclient.mods;
 
 import de.rusticprism.kreisclient.KreisClient;
 import de.rusticprism.kreisclient.modapi.KreisClientMod;
+import de.rusticprism.kreisclient.utils.config.Configuration;
 import de.rusticprism.kreisclient.utils.config.FileConfiguration;
-import de.rusticprism.kreisclient.utils.config.YamlConfiguration;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.tooltip.OrderedTextTooltipComponent;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.Item;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-
-import java.awt.*;
 
 public class BlockCounter extends KreisClientMod {
-    static MinecraftClient mc = KreisClient.MC;
+    static MinecraftClient mc = KreisClient.INSTANCE.MC;
     public static BlockCounter Instance;
     private static int blockamount;
    public FileConfiguration config;
@@ -22,7 +17,7 @@ public class BlockCounter extends KreisClientMod {
     public BlockCounter() {
         super("BlockCounter");
         Instance = this;
-        config = new YamlConfiguration("Blockcounter.txt");
+        config = new Configuration("Blockcounter.txt");
     }
 
     @Override
